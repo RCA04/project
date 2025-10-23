@@ -1,27 +1,48 @@
- import React from "react"
- import { useState } from "react"
+import React from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import Api from "../../axios"
  
  function Login(){
 
 
-    const [state, setState] = React.useState("login")
+    const [state, setState] = useState("login")
+    const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(false)
 
 
-    const [formData, setFormData] = React.useState({
-
-        name: '',
-
+    const [formData, setFormData] = useState({
         email: '',
-
         password: ''
-
     })
 
 
     const handleSubmit = async (e) => {
 
         e.preventDefault()
+        setLoading(true)
+        setMessage("")
+
+        try{
+            const response = await Api.post(`/login`, formData)
+            const token = response.data.token
+            localStorage.setItem("token", token)
+            setMessage(response.data.message)
+        }catch(error){
+            if(error.response  && error.response.data.message){
+                setMessage(error.response.data.message)
+            }else{
+                setMessage("An error occurred. Please try again.")
+            }
+
+        }finally{
+            setFormData({
+                email: '',
+                password: ''
+            })
+            setMessage("")
+            setLoading(false)
+        }
 
 
     }
@@ -46,17 +67,7 @@ import { Link } from "react-router-dom"
 
                 <p className="text-gray-500 text-sm mt-2">Please sign in to continue</p>
 
-                {state !== "login" && (
 
-                    <div className="flex items-center mt-6 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></svg>
-
-                        <input type="text" name="name" placeholder="Name" className="border-none outline-none ring-0" value={formData.name} onChange={handleChange} required />
-
-                    </div>
-
-                )}
 
                 <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
 
@@ -87,6 +98,10 @@ import { Link } from "react-router-dom"
                 </button>
 
                 <p onClick={() => setState(prev => prev === "login" ? "register" : "login")} className="text-gray-500 text-sm mt-3 mb-11">{state === "login" ? "Don't have an account?" : "Already have an account?"} <Link to="/register" className="text-indigo-500 hover:underline">click here</Link></p>
+
+                {message && (
+                    <p className="text-red-500 text-sm mb-4">{message}</p>
+                )}
 
             </form>
 
