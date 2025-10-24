@@ -1,7 +1,9 @@
 import React from "react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import Api from "../../axios"
+
  
  function Login(){
 
@@ -9,7 +11,7 @@ import Api from "../../axios"
     const [state, setState] = useState("login")
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
-
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         email: '',
@@ -28,6 +30,7 @@ import Api from "../../axios"
             const token = response.data.token
             localStorage.setItem("token", token)
             setMessage(response.data.message)
+            navigate("/dashboard")
         }catch(error){
             if(error.response  && error.response.data.message){
                 setMessage(error.response.data.message)
