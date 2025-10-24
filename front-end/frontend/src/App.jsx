@@ -18,12 +18,16 @@ function Layout(){
     <>
     {!hideNavbarRoutes && <Navbar />}
       <Routes>
+        {/*rotas públicas*/}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/*rotas protegidas*/}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         {/* <Route path="/about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} /> */}
+      
       </Routes>
     </>
   );
