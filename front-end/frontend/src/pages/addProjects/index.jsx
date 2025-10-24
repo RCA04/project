@@ -19,7 +19,6 @@ export default function AddProject() {
 
         e.preventDefault()
         setLoading(true)
-        setMessage("")
 
         try{
             const token = localStorage.getItem("token");
