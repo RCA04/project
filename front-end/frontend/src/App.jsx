@@ -8,6 +8,7 @@ import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import Projects from "./pages/projects";
 import AddProject from "./pages/addProjects";
+import EditProject from "./pages/editProjects";
 import ProtectedRoute from "./components/protectedRoute";
 
 function Layout(){
@@ -29,6 +30,7 @@ function Layout(){
 
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/add" element={<AddProject />} />
+        <Route path="/projects/edit/:id" element={<EditProject />} />
         {/*rotas protegidas*/}
          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         {/* <Route path="/about" element={<About />} />
