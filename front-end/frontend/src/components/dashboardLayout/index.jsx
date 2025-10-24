@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiUser,
@@ -12,6 +13,8 @@ import {
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
 
   // Collapse sidebar by default on smaller screens
   useEffect(() => {
@@ -19,6 +22,12 @@ export default function DashboardLayout({ children }) {
       setSidebarOpen(false);
     }
   }, []);
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -80,7 +89,7 @@ export default function DashboardLayout({ children }) {
 
         {/* Footer */}
         <div className="p-4">
-          <button className="w-full flex items-center gap-3 text-sm text-gray-700 hover:text-red-500">
+          <button onClick={handleLogout} className="w-full flex items-center gap-3 text-sm text-gray-700 hover:text-red-500">
             <FiLogOut />
             {sidebarOpen && "Logout"}
           </button>
