@@ -2,6 +2,7 @@ import api from "../../axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import DashboardLayout from "../../components/dashboardLayout";
+import { Link } from "react-router-dom";
 
 export default function Projects() {
   
@@ -28,6 +29,25 @@ export default function Projects() {
 
     fetchProjects();
   }, []);
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      await api.delete(`/projects/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setProjects(prev => prev.filter(project => project.id !== id));
+      alert("Project deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("An error occurred while deleting the project.");
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -79,10 +99,10 @@ export default function Projects() {
                   <button className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
                     View
                   </button>
-                  <button className="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500 transition">
+                  <Link to={`/projects/edit/${project.id}`} className="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500 transition">
                     Edit
-                  </button>
-                  <button className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
+                  </Link>
+                  <button onClick={handleDelete} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
                     Delete
                   </button>
                 </td>
