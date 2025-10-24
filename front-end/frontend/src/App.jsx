@@ -7,6 +7,8 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import Projects from "./pages/projects";
+import AddProject from "./pages/addProjects";
+import ProtectedRoute from "./components/protectedRoute";
 
 function Layout(){
   const location = useLocation();
@@ -23,10 +25,12 @@ function Layout(){
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/add" element={<AddProject />} />
         {/*rotas protegidas*/}
-        {/* <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> */}
+         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         {/* <Route path="/about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} /> */}
       
