@@ -46,6 +46,6 @@ useEffect(()=>{
 
 //3 custom hook for easy usage
 
-export function useAuth(){
+export function UseAuth(){
     return useContext(AuthContext);
 }

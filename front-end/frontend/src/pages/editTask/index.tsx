@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 
 export default function EditTask() {
-    const {token} = useAuth();
+    const {token} = UseAuth();
   
     const {id} = useParams();
     const [data, setData] = useState({

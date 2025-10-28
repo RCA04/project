@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::table('projects', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
-    
- 
+
         Schema::table('tasks', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
@@ -30,7 +29,7 @@ return new class extends Migration
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
         });
-         Schema::table('tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
         });

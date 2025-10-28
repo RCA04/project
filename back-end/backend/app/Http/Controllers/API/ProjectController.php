@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -14,7 +14,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::where('user_id', auth()->id())->get();
-        return response()->json($projects, 200); 
+
+        return response()->json($projects, 200);
     }
 
     /**
@@ -33,7 +34,6 @@ class ProjectController extends Controller
         $data['due_data'] = $request->due_data;
         $data['user_id'] = $request->auth()->id(); // assign to logged user
 
-
         $project = Project::create($request->data);
 
         return response()->json($project, 201);
@@ -45,7 +45,7 @@ class ProjectController extends Controller
     public function show(string $id)
     {
         $project = Project::with('tasks')->find($id);
-        if (!$project) {
+        if (! $project) {
             return response()->json(['message' => 'Project not found'], 404);
         }
 
@@ -58,7 +58,7 @@ class ProjectController extends Controller
     public function update(Request $request, string $id)
     {
         $project = Project::find($id);
-        if (!$project) {
+        if (! $project) {
             return response()->json(['message' => 'Project not found'], 404);
         }
 
@@ -68,7 +68,7 @@ class ProjectController extends Controller
             'due_date' => 'nullable|date',
         ]);
 
-        $project->name =  $request->name;
+        $project->name = $request->name;
         $project->description = $request->description;
         $project->due_date = $request->due_date;
         $project->user_id = auth()->id();
@@ -82,12 +82,13 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-                $project = Project::find($id);
-        if (!$project) {
+        $project = Project::find($id);
+        if (! $project) {
             return response()->json(['message' => 'Project not found'], 404);
         }
 
         $project->delete();
+
         return response()->json(['message' => 'Project deleted successfully'], 200);
     }
 }

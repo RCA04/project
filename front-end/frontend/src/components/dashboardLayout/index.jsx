@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   //const [userName, setUserName] = useState("");
   const navigate = useNavigate();
-  const {token, user, logout} = useAuth();
+  const { user, logout} = useAuth();
 
 
 

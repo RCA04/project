@@ -1,16 +1,15 @@
-import api from "../../axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
 import { toast } from "react-toastify";
-import {useAuth} from "../../context/AuthContext"
-
+import {UseAuth} from "../../context/AuthContext"
+import {api} from '../../axios'
 
 
 
 export default function AddProject() {
   
-    const {token} = useAuth();   
+    const {token} = UseAuth();   
     const [data, setData] = useState({  
         title: '',
         description: '',
@@ -26,7 +25,7 @@ export default function AddProject() {
 
         try{
             //const token = localStorage.getItem("token");
-            const response = await Api.post(`/projects`, data,{
+            await api.post(`/projects`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }

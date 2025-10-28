@@ -45,7 +45,7 @@ export default function Projects() {
       setProjects(prev => prev.filter(project => project.id !== id));
       toast.succes("Project deleted successfully!");
     } catch (error) {
-      toast.error("An error occurred while deleting the project.");
+      toast.error("An error occurred while deleting the project.", error);
     }
   };
 

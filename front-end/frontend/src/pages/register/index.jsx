@@ -10,9 +10,7 @@ function Register(){
 
 
 
-    const [state, setState] = useState("register")
-    const [message, setMessage] = useState("")
-    const [loading, setLoading] = useState(false)
+    const state = "register"
 
 
     const [formData, setFormData] = useState({
@@ -25,18 +23,16 @@ function Register(){
     const handleSubmit = async (e) => {
 
         e.preventDefault()
-        setLoading(true)
-        setMessage("")
 
         try{
-            const response = await registerService(formData)
+           const response = await registerService(formData)
             const token = response.data.token
             localStorage.setItem("token", token)
             // setMessage(response.data.message)
             toast.success(response.data.message)
         }catch(error){
             if(error.response  && error.response.data.message){
-            toast.error(response.data.message)
+            toast.error(error.response.data.message)
                 
             }else{
                 toast.error("An error occurred. Please try again.")
@@ -48,8 +44,6 @@ function Register(){
                 email: '',
                 password: ''
             })
-            setMessage("")
-            setLoading(false)
         }
 
 
