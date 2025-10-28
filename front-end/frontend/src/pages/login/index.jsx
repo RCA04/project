@@ -29,6 +29,9 @@ import Api from "../../axios"
             const response = await Api.post(`/login`, formData)
             const token = response.data.token
             localStorage.setItem("token", token)
+            const user = response.data.user;
+            localStorage.setItem("user", JSON.stringify(user));
+            
             setMessage(response.data.message)
             navigate("/dashboard")
         }catch(error){
