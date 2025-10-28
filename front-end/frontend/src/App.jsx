@@ -14,6 +14,7 @@ import Tasks from "./pages/tasks";
 import AddTask from "./pages/addTask";
 import EditTask from "./pages/editTask";
 import ProjectDetails from "./pages/projectDetails";
+import { ToastContainer } from "react-toastify";
 
 function Layout(){
   const location = useLocation();
@@ -46,6 +47,7 @@ function Layout(){
         <Route path="/contacts" element={<Contacts />} /> */}
       
       </Routes>
+       <ToastContainer position="top-right" autoClose={4000} hideProgressBar/>
     </>
   );
 
@@ -56,6 +58,7 @@ function App(){
     <BrowserRouter>
       <Layout />
     </BrowserRouter>
+    
   )
 }
 
