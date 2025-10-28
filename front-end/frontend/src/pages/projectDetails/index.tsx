@@ -3,8 +3,12 @@ import DashboardLayout from "../../components/dashboardLayout";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import api from "../../axios";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ProjectDetails() {
+
+  const {token} = useAuth();
+  
 
   const { id } = useParams();
   const [ProjectDetails, setProjectDetails] = useState([]);
@@ -13,7 +17,7 @@ export default function ProjectDetails() {
     // Fetch project details from API (mocked here for demonstration)
     const fetchProjectDetails = async () => {
       try{
-        const token = localStorage.getItem('token');
+        //const token = localStorage.getItem('token');
         const response = await api.get(`/projects/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,

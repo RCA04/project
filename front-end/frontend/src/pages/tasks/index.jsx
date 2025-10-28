@@ -1,15 +1,17 @@
 import DashboardLayout from "../../components/dashboardLayout";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Tasks() {
+  const {token} = useAuth();
   const [tasks, setTasks] = useState();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
       const fetchTasks = async () => {
         try {
-          const token = localStorage.getItem("token");
+         // const token = localStorage.getItem("token");
           const response = await api.get("/tasks", {
               headers: {
                   Authorization: `Bearer ${token}`
@@ -33,7 +35,7 @@ export default function Tasks() {
         if (!confirmDelete) return;
     
         try {
-          const token = localStorage.getItem("token");
+          //const token = localStorage.getItem("token");
           await api.delete(`/tasks/${id}`, {
             headers: {
               Authorization: `Bearer ${token}`

@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
 import { toast } from "react-toastify";
-
+import { useAuth } from "../../context/AuthContext";
 
 export default function EditProject() {
+  
+    const {token} = useAuth();
   
     const [id] = useParams();
     const [data, setData] = useState({
@@ -20,7 +22,7 @@ export default function EditProject() {
         // Fetch existing project data
         const fetchProject = async () => {
             try {
-                const token = localStorage.getItem("token");
+               // const token = localStorage.getItem("token");
                 const response = await api.get(`/projects/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -42,7 +44,7 @@ export default function EditProject() {
         setLoading(true)
 
         try{
-            const token = localStorage.getItem("token");
+         // const token = localStorage.getItem("token");
             const response = await Api.put(`/projects/${id}`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`

@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
 import { toast } from "react-toastify";
-
+import { useAuth } from "../../context/AuthContext";
 
 
 export default function EditTask() {
+    const {token} = useAuth();
   
     const {id} = useParams();
     const [data, setData] = useState({
@@ -26,7 +27,7 @@ export default function EditTask() {
         // Fetch projects from API (placeholder code)
         const fetchTasksAndProjects = async () => {
           try {
-            const token = localStorage.getItem("token");
+            //const token = localStorage.getItem("token");
             const response = await api.get("/projects", {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -66,7 +67,7 @@ export default function EditTask() {
         setLoading(true)
 
         try{
-            const token = localStorage.getItem("token");
+           // const token = localStorage.getItem("token");
             const response = await api.put(`/tasks/${id}`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`

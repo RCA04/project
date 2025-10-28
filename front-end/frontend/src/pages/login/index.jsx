@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import Api from "../../axios"
 import { toast } from "react-toastify"
+import {useAuth} from "../../context/AuthContext"
 
  
  function Login(){
@@ -13,6 +14,7 @@ import { toast } from "react-toastify"
     const [message, setMessage] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const {login} = useAuth();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -29,10 +31,10 @@ import { toast } from "react-toastify"
         try{
             const response = await Api.post(`/login`, formData)
             const token = response.data.token
-            localStorage.setItem("token", token)
+            //localStorage.setItem("token", token)
             const user = response.data.user;
-            localStorage.setItem("user", JSON.stringify(user));
-            
+            //localStorage.setItem("user", JSON.stringify(user));
+            login(token, user)
             setMessage(response.data.message)
             toast.success(response.data.message)
             navigate("/dashboard")
