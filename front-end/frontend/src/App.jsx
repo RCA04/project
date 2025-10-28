@@ -10,6 +10,10 @@ import Projects from "./pages/projects";
 import AddProject from "./pages/addProjects";
 import EditProject from "./pages/editProjects";
 import ProtectedRoute from "./components/protectedRoute";
+import Tasks from "./pages/tasks";
+import AddTask from "./pages/addTask";
+import EditTask from "./pages/editTask";
+import ProjectDetails from "./pages/projectDetails";
 
 function Layout(){
   const location = useLocation();
@@ -31,6 +35,11 @@ function Layout(){
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/add" element={<AddProject />} />
         <Route path="/projects/edit/:id" element={<EditProject />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/tasks/add" element={<AddTask />} />
+        <Route path="/tasks/edit/:id" element={<EditTask />} />
+        <Route path="/projects/details/:id" element={<ProjectDetails />} />
+
         {/*rotas protegidas*/}
          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         {/* <Route path="/about" element={<About />} />
