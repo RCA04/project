@@ -13,8 +13,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        
-        return response()->json(Project::all(), 200); 
+        $projects = Project::where('user_id', auth()->id())->get();
+        return response()->json($projects, 200); 
     }
 
     /**
@@ -28,7 +28,13 @@ class ProjectController extends Controller
             'due_date' => 'nullable|date',
         ]);
 
-        $project = Project::create($request->all());
+        $data['name'] = $request->name;
+        $data['description'] = $request->description;
+        $data['due_data'] = $request->due_data;
+        $data['user_id'] = $request->auth()->id(); // assign to logged user
+
+
+        $project = Project::create($request->data);
 
         return response()->json($project, 201);
     }
@@ -38,7 +44,7 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        $project = Project::find($id);
+        $project = Project::with('tasks')->find($id);
         if (!$project) {
             return response()->json(['message' => 'Project not found'], 404);
         }

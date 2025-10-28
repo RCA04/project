@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::with('project')->get();
+        $task = Task::with('project')->where('user_id', auth()->id())->get();
         return response()->json($task, 200);
     }
 
@@ -35,7 +35,14 @@ class TaskController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $task = Task::create($request->all());
+        $data['project_id'] = $request->project_id;
+        $data['title'] = $request->title;
+        $data['description'] = $request->description;
+        $data['status'] = $request->status;
+        $data['user_id'] = $request->auth()->id();
+        $data['due_data'] = $request->due_data;
+
+        $task = Task::create($data);
 
         return response()->json($task, 201);
     }
@@ -82,6 +89,8 @@ class TaskController extends Controller
         $task->description = $request->description;
         $task->status = $request->status;
         $task->due_date = $request->due_date;
+        $task->user_id = auth()->id();
+
         $task->save();
 
         return response()->json($task, 200);
@@ -92,6 +101,13 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $task = Task::find($id);
+        if (!$task) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+
+        $task->delete();
+
+        return response()->json(['message' => 'Task deleted successfully'], 200);
     }
 }
