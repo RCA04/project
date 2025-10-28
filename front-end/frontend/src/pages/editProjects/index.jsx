@@ -9,14 +9,16 @@ export default function EditProject() {
   
     const {token} = UseAuth();
   
-    const [id] = useParams();
+    const {id} = useParams();
     const [data, setData] = useState({
-        title: '',
+        name: '',
         description: '',
-        dueDate: ''
+        due_date: ''
     });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    console.log(id)
 
         useEffect(() => {
         // Fetch existing project data
@@ -25,25 +27,23 @@ export default function EditProject() {
                // const token = localStorage.getItem("token");
                const response = await api.get(`/projects/${id}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                      Authorization: `Bearer ${token}`,
+                      body: JSON.stringify(data)
                     }
-                });
-                setData({
-                    title: response.data.name,
+                  });
+                  setData({
+                    name: response.data.name,
                     description: response.data.description,
-                    dueDate: response.data.dueDate
-                });
-            } catch (error) {
+                    due_date: response.data.due_date
+                  }
+                  );
+                  console.log(response.data)
+              } catch (error) {
                 console.error("Error fetching project:", error);
-            }finally{
-              setData({
-                title:'',
-                description:'',
-                dueDate:'',    
-              })
+              }
             }
-          }
-          fetchProject();
+            fetchProject();
+            console.log(data)
       },[id, token]);
 
        const handleUpdate = async (e) => {
@@ -59,9 +59,7 @@ export default function EditProject() {
                 }
 
             });
-            toast.succes("Project edited successfully!");
-            
-            navigate("/projects");
+            toast.success("Project edited successfully!");
         }catch(error){
             if(error  && error.data.message){
                 toast.error(error.data.message)
@@ -71,11 +69,13 @@ export default function EditProject() {
 
         }finally{
             setData({
-                title: '',
+                name: '',
                 description: '',
-                dueDate: ''
+                due_date: ''
             })
             setLoading(false)
+            navigate("/projects");
+            
         }
     }
 
@@ -106,8 +106,8 @@ export default function EditProject() {
                 placeholder="Enter project title"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
-                name="title"
-                value={data.title}
+                name="name"
+                value={data.name}
                 onChange={handleChange}
               />
             </div>
@@ -137,8 +137,8 @@ export default function EditProject() {
                 type="date"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
-                name="dueDate"
-                value={data.dueDate}
+                name="due_date"
+                value={data.due_date}
                 onChange={handleChange}
               />
             </div>
@@ -146,10 +146,10 @@ export default function EditProject() {
             {/* Submit Button */}
             <div>
               <button
-                type="submit"
+                onClick={handleUpdate}
                 className="w-full bg-blue-600 text-white py-3 px-4 rounded-md shadow hover:bg-blue-700 transition"
               >
-                {loading ? "Adding..." : "Add Project"}
+                {loading ? "Editting..." : "Edit Project"}
               </button>
             </div>
           </form>

@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/home";
-import About from "./pages/about";
-import Contacts from "./pages/contacts";
 import Navbar from "./components/navbar";
 import Login from "./pages/login";
 import Register from "./pages/register";
@@ -32,17 +30,15 @@ function Layout(){
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/projects/add" element={<AddProject />} />
-        <Route path="/projects/edit/:id" element={<EditProject />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/tasks/add" element={<AddTask />} />
-        <Route path="/tasks/edit/:id" element={<EditTask />} />
-        <Route path="/projects/details/:id" element={<ProjectDetails />} />
-
-        {/*rotas protegidas*/}
-         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
+        <Route path="/projects/add" element={<ProtectedRoute><AddProject /></ProtectedRoute>} />
+        <Route path="/projects/edit/:id" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
+        <Route path="/projects/details/:id" element={<ProtectedRoute><ProjectDetails /></ProtectedRoute>} />
+        <Route path="/tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
+        <Route path="/tasks/add" element={<ProtectedRoute><AddTask /></ProtectedRoute>} />
+        <Route path="/tasks/edit/:id" element={<ProtectedRoute><EditTask /></ProtectedRoute>} />
+        
         {/* <Route path="/about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} /> */}
       
