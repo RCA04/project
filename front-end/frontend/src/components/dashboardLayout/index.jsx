@@ -26,6 +26,7 @@ export default function DashboardLayout({ children }) {
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
   };
 
