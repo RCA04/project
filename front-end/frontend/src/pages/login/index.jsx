@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import Api from "../../axios"
 import { toast } from "react-toastify"
 import {useAuth} from "../../context/AuthContext"
+import { loginService } from "../../services/authServices"
 
  
  function Login(){
@@ -29,13 +30,12 @@ import {useAuth} from "../../context/AuthContext"
         setMessage("")
 
         try{
-            const response = await Api.post(`/login`, formData)
+            const response = await loginService(formData)
             const token = response.data.token
             //localStorage.setItem("token", token)
             const user = response.data.user;
             //localStorage.setItem("user", JSON.stringify(user));
             login(token, user)
-            setMessage(response.data.message)
             toast.success(response.data.message)
             navigate("/dashboard")
         }catch(error){
