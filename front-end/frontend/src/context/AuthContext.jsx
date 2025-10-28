@@ -10,7 +10,7 @@ export function AuthProvider({children}){
 
 
 
-// sync  changes    to localstorage whenever token/user changes
+// sync  changes to localstorage whenever token/user changes
 
 useEffect(()=>{
     if(token){

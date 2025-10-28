@@ -4,12 +4,12 @@ import { useState } from "react"
 import Api from "../../axios"
 import { toast } from "react-toastify";
 import { registerService } from "../../services/authServices";
-
+import { useNavigate } from "react-router-dom";
 
 function Register(){
 
 
-
+    const navigate = useNavigate();
     const state = "register"
 
 
@@ -26,18 +26,12 @@ function Register(){
 
         try{
            const response = await registerService(formData)
-            const token = response.data.token
+            const token = response.token
             localStorage.setItem("token", token)
-            // setMessage(response.data.message)
-            toast.success(response.data.message)
+            toast.success(response.message)
+            navigate('/dashboard')
         }catch(error){
-            if(error.response  && error.response.data.message){
-            toast.error(error.response.data.message)
-                
-            }else{
-                toast.error("An error occurred. Please try again.")
-            }
-
+                toast.error("An error occurred. Please try again.", error)
         }finally{
             setFormData({
                 name: '',

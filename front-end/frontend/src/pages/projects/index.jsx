@@ -34,18 +34,17 @@ export default function Projects() {
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this project?");
     if (!confirmDelete) return;
-
     try {
       const token = localStorage.getItem("token");
-      await api.delete(`/projects/${id}`, {
+       await api.delete(`/projects/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       setProjects(prev => prev.filter(project => project.id !== id));
-      toast.succes("Project deleted successfully!");
+      toast.success("Project deleted successfully!");
     } catch (error) {
-      toast.error("An error occurred while deleting the project.", error);
+      toast.error("An error occurred while deleting the project.");
     }
   };
 

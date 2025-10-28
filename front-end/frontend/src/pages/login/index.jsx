@@ -27,20 +27,15 @@ import { loginService } from "../../services/authServices"
 
         try{
             const response = await loginService(formData)
-            const token = response.data.token
-            //localStorage.setItem("token", token)
-            const user = response.data.user;
-            //localStorage.setItem("user", JSON.stringify(user));
+            console.log(response)
+            const token = response.token
+            const user = response.user;
             login(token, user)
-            toast.success(response.data.message)
+            toast.success(response.message)
             navigate("/dashboard")
         }catch(error){
-            if(error.response  && error.response.data.message){
-                toast.error(error.response.data.message)
-
-            }else{
-                toast.error("An error occurred. Please try again.")
-            }
+                toast.error("An error occurred. Please try again.", error)
+                console.log(error)
 
         }finally{
             setFormData({

@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
+import api from '../../axios'
 import { toast } from "react-toastify";
 import {UseAuth} from "../../context/AuthContext"
-import {api} from '../../axios'
 
 
 
 export default function AddProject() {
   
-    const {token} = UseAuth();   
+    const {token, user} = UseAuth();   
     const [data, setData] = useState({  
-        title: '',
+        name: '',
         description: '',
         due_date: ''
     });
+
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -30,10 +31,12 @@ export default function AddProject() {
                     Authorization: `Bearer ${token}`
                 }
 
-            });
+              });
+              console.log(data)
             toast.success('Project added successfully')
             navigate("/projects");
         }catch(error){
+          console.log(data)
             if(error.response  && error.response.data.message){
             toast.error('Project error to add project')
            
@@ -43,7 +46,7 @@ export default function AddProject() {
 
         }finally{
             setData({
-                title: '',
+                name: '',
                 description: '',
                 due_date: ''
             })
@@ -78,8 +81,8 @@ export default function AddProject() {
                 placeholder="Enter project title"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
-                name="title"
-                value={data.title}
+                name="name"
+                value={data.name}
                 onChange={handleChange}
               />
             </div>
@@ -109,8 +112,8 @@ export default function AddProject() {
                 type="date"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
-                name="dueDate"
-                value={data.dueDate}
+                name="due_date"
+                value={data.due_date}
                 onChange={handleChange}
               />
             </div>

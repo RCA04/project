@@ -34,7 +34,7 @@ function Layout(){
         <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
         <Route path="/projects/add" element={<ProtectedRoute><AddProject /></ProtectedRoute>} />
         <Route path="/projects/edit/:id" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
-        <Route path="/projects/details/:id" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/projects/details/:id" element={<ProtectedRoute><ProjectDetails /></ProtectedRoute>} />
         <Route path="/tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
         <Route path="/tasks/add" element={<ProtectedRoute><AddTask /></ProtectedRoute>} />
         <Route path="/tasks/edit/:id" element={<ProtectedRoute><EditTask /></ProtectedRoute>} />
