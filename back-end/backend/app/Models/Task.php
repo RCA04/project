@@ -12,9 +12,9 @@ class Task extends Model
         'description',
         'status',
         'due_date',
-        'user_id'
+        'user_id',
     ];
-    
+
     public function project()
     {
         return $this->belongsTo(Project::class);

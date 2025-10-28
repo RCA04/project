@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('due_date')->nullable();
             $table->timestamps();
 
-
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }

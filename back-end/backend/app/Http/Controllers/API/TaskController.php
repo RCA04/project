@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Task;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
@@ -15,6 +15,7 @@ class TaskController extends Controller
     public function index()
     {
         $task = Task::with('project')->where('user_id', auth()->id())->get();
+
         return response()->json($task, 200);
     }
 
@@ -31,7 +32,7 @@ class TaskController extends Controller
             'due_date' => 'nullable|date',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
@@ -53,12 +54,11 @@ class TaskController extends Controller
     public function show(string $id)
     {
         $task = Task::with('project')->find($id);
-        if (!$task) {
+        if (! $task) {
             return response()->json(['message' => 'Task not found'], 404);
         }
 
         return response()->json($task, 200);
-        
 
     }
 
@@ -68,7 +68,7 @@ class TaskController extends Controller
     public function update(Request $request, string $id)
     {
         $task = Task::find($id);
-        if (!$task) {
+        if (! $task) {
             return response()->json(['message' => 'Task not found'], 404);
         }
 
@@ -80,7 +80,7 @@ class TaskController extends Controller
             'due_date' => 'nullable|date',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
@@ -102,7 +102,7 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         $task = Task::find($id);
-        if (!$task) {
+        if (! $task) {
             return response()->json(['message' => 'Task not found'], 404);
         }
 
