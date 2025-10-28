@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\ProjectController;
 
@@ -16,4 +17,8 @@ Route::apiResource('tasks', TaskController::class);
 
 Route::post('/register', [AuthController::class, 'register']); //register route
 Route::post('/login', [AuthController::class, 'login']);    //login route
- 
+Route::post('/logout', [AuthController::class, 'logout']); 
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum') 
+
+Route::get('/dashboard-stats',[DashboardController::class, 'stats']);
+// Route::get('/dashboard-stats',[DashboardController::class, 'stats'])->middleware('auth:sanctum');
