@@ -26,7 +26,7 @@ export default function ProjectDetails() {
       }
       fetchProjectDetails();
 
-    }},[id])
+    }},[id]);
 
   return (
     <DashboardLayout>
@@ -49,51 +49,61 @@ export default function ProjectDetails() {
         </div>
 
         {/* Tasks Table */}
-        <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  S.No
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Task Title
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Description
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Due Date
-                </th>
-              </tr>
-            </thead>
 
-            <tbody className="divide-y divide-gray-200">
-              {ProjectDetails.tasks.map((task) => (
+        {ProjectDetails.tasks?.length == 0 ? (
 
-              <tr key={task.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">{task.id}</td>
-                <td className="px-6 py-4 font-medium text-gray-900">
-                  {task.title}
-                </td>
-                <td className="px-6 py-4 text-gray-700">
-                  {task.description}
-                </td>
-                <td className="px-6 py-4 text-yellow-600 font-medium">
-                  {task.status}
-                </td>
-                <td className="px-6 py-4 text-gray-700">{task.dueDate}</td>
-              </tr>
-              ))}
-             
+          <p>loading...</p>
+        ) : tasks.lenght === 0 ? (
+          <p>No tasks found.</p>
 
-            </tbody>
-          </table>
-        </div>
-      </div>
+        ):(
+
+          <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    S.No
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Task Title
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Due Date
+                  </th>
+                </tr>
+              </thead>
+  
+              <tbody className="divide-y divide-gray-200">
+                {ProjectDetails.tasks.map((task) => (
+  
+                <tr key={task.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4">{task.id}</td>
+                  <td className="px-6 py-4 font-medium text-gray-900">
+                    {task.title}
+                  </td>
+                  <td className="px-6 py-4 text-gray-700">
+                    {task.description}
+                  </td>
+                  <td className="px-6 py-4 text-yellow-600 font-medium">
+                    {task.status}
+                  </td>
+                  <td className="px-6 py-4 text-gray-700">{task.dueDate}</td>
+                </tr>
+                ))}
+               
+  
+              </tbody>
+            </table>
+          </div>
+
+        )}
     </DashboardLayout>
   );
 }
