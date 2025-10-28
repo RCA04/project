@@ -23,18 +23,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'due_date' => 'nullable|date',
-        ]);
+        $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'due_date' => 'nullable|date',
+    ]);
+        $userId = auth()->id();
 
-        $data['name'] = $request->name;
-        $data['description'] = $request->description;
-        $data['due_data'] = $request->due_data;
-        $data['user_id'] = $request->auth()->id(); // assign to logged user
+        $data = [
+        'name' => $validated['name'],
+        'description' => $validated['description'] ?? null,
+        'due_date' => $validated['due_date'] ?? null,
+        'user_id' => $userId,
+    ];
 
-        $project = Project::create($request->data);
+        $project = Project::create($data);
 
         return response()->json($project, 201);
     }
