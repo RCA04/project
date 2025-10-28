@@ -2,15 +2,19 @@ import api from "../../axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
+import { toast } from "react-toastify";
+import {useAuth} from "../../context/AuthContext"
+
 
 
 
 export default function AddProject() {
   
-    const [data, setData] = useState({
+    const {token} = useAuth();   
+    const [data, setData] = useState({  
         title: '',
         description: '',
-        dueDate: ''
+        due_date: ''
     });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -21,27 +25,28 @@ export default function AddProject() {
         setLoading(true)
 
         try{
-            const token = localStorage.getItem("token");
+            //const token = localStorage.getItem("token");
             const response = await Api.post(`/projects`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
 
             });
-            alert("Project added successfully!");
+            toast.success('Project added successfully')
             navigate("/projects");
         }catch(error){
             if(error.response  && error.response.data.message){
-                alert(error.response.data.message)
+            toast.error('Project error to add project')
+           
             }else{
-                alert("An error occurred. Please try again.")
+                toast.error("An error occurred. Please try again.")
             }
 
         }finally{
             setData({
                 title: '',
                 description: '',
-                dueDate: ''
+                due_date: ''
             })
             setLoading(false)
         }

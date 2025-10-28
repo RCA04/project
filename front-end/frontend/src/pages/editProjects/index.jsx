@@ -2,10 +2,12 @@ import api from "../../axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
-
-
+import { toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
 
 export default function EditProject() {
+  
+    const {token} = useAuth();
   
     const [id] = useParams();
     const [data, setData] = useState({
@@ -20,7 +22,7 @@ export default function EditProject() {
         // Fetch existing project data
         const fetchProject = async () => {
             try {
-                const token = localStorage.getItem("token");
+               // const token = localStorage.getItem("token");
                 const response = await api.get(`/projects/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -42,20 +44,21 @@ export default function EditProject() {
         setLoading(true)
 
         try{
-            const token = localStorage.getItem("token");
+         // const token = localStorage.getItem("token");
             const response = await Api.put(`/projects/${id}`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
 
             });
-            alert("Project edited successfully!");
+            toast.succes("Project edited successfully!");
+            
             navigate("/projects");
         }catch(error){
             if(error.response  && error.response.data.message){
-                alert(error.response.data.message)
+                toast.error(error.response.data.message)
             }else{
-                alert("An error occurred. Please try again.")
+                toast.error("An error occurred. Please try again.")
             }
 
         }finally{

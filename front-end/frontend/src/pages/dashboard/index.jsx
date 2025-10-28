@@ -4,6 +4,8 @@ import { FiUsers, FiShoppingCart, FiBell } from "react-icons/fi";
 import { GoProject } from "react-icons/go";
 import { useEffect, useState } from "react";
 import api from "../../axios";
+import {useAuth} from "../../context/AuthContext"
+
 
 export default function Dashboard() {
 
@@ -12,12 +14,15 @@ export default function Dashboard() {
     task_count: 0
 });
 
+    const {token, user} = useAuth();
+
+
   const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
     const fetchStats = async () => {
       try{
-        const token = localStorage.getItem("token");
+       // const token = localStorage.getItem("token");
         const response = await api.get('/dashboard-stats',{
           headers: {
             Authorization: `Bearer ${token}`

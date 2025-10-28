@@ -71,6 +71,7 @@ class ProjectController extends Controller
         $project->name =  $request->name;
         $project->description = $request->description;
         $project->due_date = $request->due_date;
+        $project->user_id = auth()->id();
         $project->save();
 
         return response()->json($project, 200);

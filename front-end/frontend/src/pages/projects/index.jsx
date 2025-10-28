@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import DashboardLayout from "../../components/dashboardLayout";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Projects() {
   
@@ -42,10 +43,9 @@ export default function Projects() {
         }
       });
       setProjects(prev => prev.filter(project => project.id !== id));
-      alert("Project deleted successfully!");
+      toast.succes("Project deleted successfully!");
     } catch (error) {
-      console.error("Error deleting project:", error);
-      alert("An error occurred while deleting the project.");
+      toast.error("An error occurred while deleting the project.");
     }
   };
 

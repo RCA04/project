@@ -47,7 +47,7 @@ function Layout(){
         <Route path="/contacts" element={<Contacts />} /> */}
       
       </Routes>
-       <ToastContainer position="top-right" autoClose={4000} hideProgressBar/>
+       <ToastContainer position="top-right" theme="colored" autoClose={4000} hideProgressBar/>
     </>
   );
 

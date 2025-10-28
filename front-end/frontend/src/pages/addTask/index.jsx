@@ -3,11 +3,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
+import { toast } from "react-toastify";
+import {useAuth} from "../../context/AuthContext"
+
 
 
 
 export default function AddTask() {
-  
+    
+    const {token} = useAuth();  
     const [data, setData] = useState({
         projectId:'',
         title: '',
@@ -23,7 +27,7 @@ export default function AddTask() {
         // Fetch projects from API (placeholder code)
         const fetchProjects = async () => {
           try {
-            const token = localStorage.getItem("token");
+            //const token = localStorage.getItem("token");
             const response = await api.get("/projects", {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -46,20 +50,22 @@ export default function AddTask() {
         setLoading(true)
 
         try{
-            const token = localStorage.getItem("token");
+            //const token = localStorage.getItem("token");
             const response = await api.post(`/tasks`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
 
             });
-            alert("Project added successfully!");
+            toast.success('Task added successfully')
+
             navigate("/tasks");
         }catch(error){
             if(error.response  && error.response.data.message){
-                alert(error.response.data.message)
+                
+              toast.error(error.response.data.message)
             }else{
-                alert("An error occurred. Please try again.")
+                toast.error("An error occurred. Please try again.")
             }
 
         }finally{
