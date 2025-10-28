@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::with('project')->get();
+        $task = Task::with('project')->where('user_id', auth()->id())->get();
         return response()->json($task, 200);
     }
 
@@ -89,6 +89,8 @@ class TaskController extends Controller
         $task->description = $request->description;
         $task->status = $request->status;
         $task->due_date = $request->due_date;
+        $task->user_id = auth()->id();
+
         $task->save();
 
         return response()->json($task, 200);

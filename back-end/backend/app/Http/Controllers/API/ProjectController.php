@@ -13,8 +13,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        
-        return response()->json(Project::all(), 200); 
+        $projects = Project::where('user_id', auth()->id())->get();
+        return response()->json($projects, 200); 
     }
 
     /**
