@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import Api from "../../axios"
+import { toast } from "react-toastify"
 
  
  function Login(){
@@ -33,12 +34,14 @@ import Api from "../../axios"
             localStorage.setItem("user", JSON.stringify(user));
             
             setMessage(response.data.message)
+            toast.success(response.data.message)
             navigate("/dashboard")
         }catch(error){
             if(error.response  && error.response.data.message){
-                setMessage(error.response.data.message)
+                toast.error(response.data.message)
+
             }else{
-                setMessage("An error occurred. Please try again.")
+                toast.error("An error occurred. Please try again.")
             }
 
         }finally{
@@ -104,10 +107,6 @@ import Api from "../../axios"
                 </button>
 
                 <p onClick={() => setState(prev => prev === "login" ? "register" : "login")} className="text-gray-500 text-sm mt-3 mb-11">{state === "login" ? "Don't have an account?" : "Already have an account?"} <Link to="/register" className="text-indigo-500 hover:underline">click here</Link></p>
-
-                {message && (
-                    <p className="text-red-500 text-sm mb-4">{message}</p>
-                )}
 
             </form>
 

@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom";
 import { useState } from "react"
 import Api from "../../axios"
+import { toast } from "react-toastify";
 
 
 function Register(){
@@ -30,12 +31,14 @@ function Register(){
             const response = await Api.post(`/register`, formData)
             const token = response.data.token
             localStorage.setItem("token", token)
-            setMessage(response.data.message)
+            // setMessage(response.data.message)
+            toast.success(response.data.message)
         }catch(error){
             if(error.response  && error.response.data.message){
-                setMessage(error.response.data.message)
+            toast.error(response.data.message)
+                
             }else{
-                setMessage("An error occurred. Please try again.")
+                toast.error("An error occurred. Please try again.")
             }
 
         }finally{
