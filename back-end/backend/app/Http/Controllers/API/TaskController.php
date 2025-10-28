@@ -35,7 +35,14 @@ class TaskController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $task = Task::create($request->all());
+        $data['project_id'] = $request->project_id;
+        $data['title'] = $request->title;
+        $data['description'] = $request->description;
+        $data['status'] = $request->status;
+        $data['user_id'] = $request->auth()->id();
+        $data['due_data'] = $request->due_data;
+
+        $task = Task::create($data);
 
         return response()->json($task, 201);
     }
