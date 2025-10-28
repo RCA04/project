@@ -1,10 +1,11 @@
 import DashboardLayout from "../../components/dashboardLayout";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
+import api from "../../axios";
 
 export default function Tasks() {
-  const {token} = useAuth();
+  const {token} = UseAuth();
   const [tasks, setTasks] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -12,7 +13,7 @@ export default function Tasks() {
       const fetchTasks = async () => {
         try {
          // const token = localStorage.getItem("token");
-          const response = await api.get("/tasks", {
+         const response = await api.get("/tasks", {
               headers: {
                   Authorization: `Bearer ${token}`
               }
@@ -26,7 +27,7 @@ export default function Tasks() {
       };
   
       fetchTasks();
-    }, []);
+    }, [token]);
 
 
 

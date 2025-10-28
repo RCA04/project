@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import Api from "../../axios"
 import { toast } from "react-toastify"
-import {useAuth} from "../../context/AuthContext"
+import {UseAuth} from "../../context/AuthContext"
 import { loginService } from "../../services/authServices"
 
  
@@ -12,10 +12,8 @@ import { loginService } from "../../services/authServices"
 
 
     const [state, setState] = useState("login")
-    const [message, setMessage] = useState("")
-    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const {login} = useAuth();
+    const {login} = UseAuth();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -26,8 +24,6 @@ import { loginService } from "../../services/authServices"
     const handleSubmit = async (e) => {
 
         e.preventDefault()
-        setLoading(true)
-        setMessage("")
 
         try{
             const response = await loginService(formData)
@@ -40,7 +36,7 @@ import { loginService } from "../../services/authServices"
             navigate("/dashboard")
         }catch(error){
             if(error.response  && error.response.data.message){
-                toast.error(response.data.message)
+                toast.error(error.response.data.message)
 
             }else{
                 toast.error("An error occurred. Please try again.")
@@ -51,8 +47,6 @@ import { loginService } from "../../services/authServices"
                 email: '',
                 password: ''
             })
-            setMessage("")
-            setLoading(false)
         }
 
 

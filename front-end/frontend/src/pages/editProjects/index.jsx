@@ -1,13 +1,13 @@
-import api from "../../axios";
 import { useEffect, useState } from "react";
+import api from "../../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 export default function EditProject() {
   
-    const {token} = useAuth();
+    const {token} = UseAuth();
   
     const [id] = useParams();
     const [data, setData] = useState({
@@ -23,7 +23,7 @@ export default function EditProject() {
         const fetchProject = async () => {
             try {
                // const token = localStorage.getItem("token");
-                const response = await api.get(`/projects/${id}`, {
+               const response = await api.get(`/projects/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -35,8 +35,16 @@ export default function EditProject() {
                 });
             } catch (error) {
                 console.error("Error fetching project:", error);
+            }finally{
+              setData({
+                title:'',
+                description:'',
+                dueDate:'',    
+              })
             }
-        }});
+          }
+          fetchProject();
+      },[id, token]);
 
        const handleUpdate = async (e) => {
 
@@ -45,7 +53,7 @@ export default function EditProject() {
 
         try{
          // const token = localStorage.getItem("token");
-            const response = await Api.put(`/projects/${id}`, data,{
+            await api.put(`/projects/${id}`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
@@ -55,8 +63,8 @@ export default function EditProject() {
             
             navigate("/projects");
         }catch(error){
-            if(error.response  && error.response.data.message){
-                toast.error(error.response.data.message)
+            if(error  && error.data.message){
+                toast.error(error.data.message)
             }else{
                 toast.error("An error occurred. Please try again.")
             }

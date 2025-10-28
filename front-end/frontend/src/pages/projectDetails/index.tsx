@@ -3,11 +3,11 @@ import DashboardLayout from "../../components/dashboardLayout";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import api from "../../axios";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 export default function ProjectDetails() {
 
-  const {token} = useAuth();
+  const {token} = UseAuth();
   
 
   const { id } = useParams();
