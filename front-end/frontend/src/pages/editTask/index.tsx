@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
+import { toast } from "react-toastify";
 
 
 
@@ -72,11 +73,10 @@ export default function EditTask() {
                 }
 
             });
-            alert("Task updated successfully!");
+            toast.success("Task updated successfully!");
             navigate("/tasks");
         }catch(error){
-            console.log("Error updating task", error);
-            alert('Error updating task');
+            toast.error('Error updating task');
         }finally{
             setData({
                 projectId:'',

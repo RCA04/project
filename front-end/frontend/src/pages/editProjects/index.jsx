@@ -2,7 +2,7 @@ import api from "../../axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
-
+import { toast } from "react-toastify";
 
 
 export default function EditProject() {
@@ -49,13 +49,14 @@ export default function EditProject() {
                 }
 
             });
-            alert("Project edited successfully!");
+            toast.succes("Project edited successfully!");
+            
             navigate("/projects");
         }catch(error){
             if(error.response  && error.response.data.message){
-                alert(error.response.data.message)
+                toast.error(error.response.data.message)
             }else{
-                alert("An error occurred. Please try again.")
+                toast.error("An error occurred. Please try again.")
             }
 
         }finally{
