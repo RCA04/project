@@ -29,7 +29,10 @@ class ProjectController extends Controller
         'due_date' => 'nullable|date',
     ]);
         $userId = auth()->id();
-
+        if(!$userId)
+{
+    return response()->json(['message'=> 'user not autenticaded'],401);
+}
         $data = [
         'name' => $validated['name'],
         'description' => $validated['description'] ?? null,
