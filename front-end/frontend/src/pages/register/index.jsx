@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react"
 import Api from "../../axios"
 import { toast } from "react-toastify";
+import { registerService } from "../../services/authServices";
 
 
 function Register(){
@@ -28,7 +29,7 @@ function Register(){
         setMessage("")
 
         try{
-            const response = await Api.post(`/register`, formData)
+            const response = await registerService(formData)
             const token = response.data.token
             localStorage.setItem("token", token)
             // setMessage(response.data.message)
