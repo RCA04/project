@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import DashboardLayout from "../../components/dashboardLayout";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { MdAddCircle } from "react-icons/md";
+
 
 export default function Projects() {
   
@@ -92,7 +94,7 @@ export default function Projects() {
                   {project.description}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-gray-700">
-                  {project.dueDate}
+                  {project.due_date}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap flex gap-2">
                   <Link to={`/projects/details/${project.id}`} className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
@@ -101,20 +103,20 @@ export default function Projects() {
                   <Link to={`/projects/edit/${project.id}`} className="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500 transition">
                     Edit
                   </Link>
-                  <button onClick={handleDelete} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
+                  <button onClick={()=>handleDelete(project.id)} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
                     Delete
                   </button>
                 </td>
               </tr>
                 ))}
-
-
-
-
             </tbody>
           </table>
         </div>
-        )}   
+        )}
+        <div className="w-full flex-col flex mt-3 items-end">
+          <Link className="text-5xl text-cyan-500  hover:scale-110 transition-all duration-150" to='/projects/add'><MdAddCircle/></Link>
+          <p className="text-sm font-semibold text-gray-600">add Project</p>
+        </div>
       </div>
     </DashboardLayout>
   );

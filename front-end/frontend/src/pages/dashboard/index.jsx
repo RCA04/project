@@ -10,8 +10,8 @@ import {UseAuth} from "../../context/AuthContext"
 export default function Dashboard() {
 
   const [stats, setStats] = useState({
-    project_count:0,
-    task_count: 0
+    projects_count:0,
+    tasks_count: 0
 });
 
     const {token} = UseAuth();
@@ -29,6 +29,8 @@ export default function Dashboard() {
           }
         });
         setStats(response.data);
+        console.log(response + 'Aqui está a resposta do servidor')
+        console.log(response.data + 'Aqui está a data do servidor')
 
       }catch(error){
         console.log('Erro stats loading', error)
@@ -59,7 +61,7 @@ export default function Dashboard() {
           </div>
           <div>
             <h2 className="text-sm font-medium text-gray-500">Projects</h2>
-            <p className="text-2xl font-bold text-gray-800">{stats.project_count}</p>
+            <p className="text-2xl font-bold text-gray-800">{stats.projects_count}</p>
           </div>
         </div>
 
@@ -70,7 +72,7 @@ export default function Dashboard() {
           </div>
           <div>
             <h2 className="text-sm font-medium text-gray-500">Tasks</h2>
-            <p className="text-2xl font-bold text-gray-800">{stats.task_count}</p>
+            <p className="text-2xl font-bold text-gray-800">{stats.tasks_count}</p>
           </div>
         </div>
 

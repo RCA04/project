@@ -5,17 +5,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
 import { toast } from "react-toastify";
 import { UseAuth } from "../../context/AuthContext";
-
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function EditTask() {
     const {token} = UseAuth();
   
     const {id} = useParams();
     const [data, setData] = useState({
-        projectId:'',
+        project_id:'',
         title: '',
         description: '',
-        dueDate: '',
+        due_date: '',
         status:''
     });
     const [loading, setLoading] = useState(false);
@@ -44,10 +45,10 @@ export default function EditTask() {
             }); 
 
             setData({
-                projectId: responseTask.data.projectId,
+                project_id: responseTask.data.project_id,
                 title: responseTask.data.title,
                 description: responseTask.data.description,
-                dueDate: responseTask.data.dueDate,
+                due_date: responseTask.data.due_date,
                 status: responseTask.data.status
             });
 
@@ -80,10 +81,10 @@ export default function EditTask() {
             toast.error('Error updating task');
         }finally{
             setData({
-                projectId:'',
+                project_id:'',
                 title: '',
                 description: '',
-                dueDate: '',
+                due_date: '',
                 status:''
             })
             setLoading(false)
@@ -100,6 +101,12 @@ export default function EditTask() {
   
     return (
     <DashboardLayout>
+
+            <div className="w-full flex-col flex mt-3 items-start">
+            <Link className="text-4xl text-cyan-500  hover:scale-110 transition-all duration-150" to='/tasks'><FaArrowAltCircleLeft /></Link>
+            <p className="text-sm font-semibold text-gray-600">return</p>
+            </div>
+
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="w-full bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
@@ -113,7 +120,7 @@ export default function EditTask() {
                 Select Project
               </label>
 
-              <select name="projectId" value={data.projectId}
+              <select name="project_id" value={data.project_id}
               className="mt-1 block w-full rounded-md border-gray-300 
               shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 onChange={handleChange}
@@ -124,15 +131,7 @@ export default function EditTask() {
                   </option>
                 ))}
               </select>
-              <input
-                type="text"
-                placeholder="Enter project title"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
-                required
-                name="title"
-                value={data.title}
-                onChange={handleChange}
-              />
+
             </div>
             
             
@@ -144,7 +143,7 @@ export default function EditTask() {
               </label>
               <input
                 type="text"
-                placeholder="Enter project title"
+                placeholder="Enter task title"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
                 name="title"
@@ -159,7 +158,7 @@ export default function EditTask() {
                 Description
               </label>
               <textarea
-                placeholder="Enter project description"
+                placeholder="Enter task description"
                 rows={4}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
@@ -178,8 +177,8 @@ export default function EditTask() {
                 type="date"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
-                name="dueDate"
-                value={data.dueDate}
+                name="due_date"
+                value={data.due_date}
                 onChange={handleChange}
               />
             </div>
@@ -191,7 +190,7 @@ export default function EditTask() {
                 onChange={handleChange}
               >
                   <option value='pending' >Pendente</option>
-                  <option value='in-progress' >Em Progresso</option>
+                  <option value='progress' >Em Progresso</option>
                   <option value='completed' >Concluído</option>
               </select>
 
@@ -201,7 +200,7 @@ export default function EditTask() {
                 type="submit"
                 className="w-full bg-blue-600 text-white py-3 px-4 rounded-md shadow hover:bg-blue-700 transition"
               >
-                {loading ? "Adding..." : "Add Project"}
+                {loading ? "Editing..." : "Edit Task"}
               </button>
             </div>
           </form>
