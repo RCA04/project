@@ -28,7 +28,7 @@ class TaskController extends Controller
             'project_id' => 'required|exists:projects,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'in:pending,in_progress,completed',
+            'status' => 'in:pending,progress,completed',
             'due_date' => 'nullable|date',
         ]);
 
@@ -40,8 +40,8 @@ class TaskController extends Controller
         $data['title'] = $request->title;
         $data['description'] = $request->description;
         $data['status'] = $request->status;
-        $data['user_id'] = $request->auth()->id();
-        $data['due_data'] = $request->due_data;
+        $data['user_id'] = auth()->id();
+        $data['due_date'] = $request->due_date;
 
         $task = Task::create($data);
 
@@ -76,7 +76,7 @@ class TaskController extends Controller
             'project_id' => 'sometimes|required|exists:projects,id',
             'title' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'in:pending,in_progress,completed',
+            'status' => 'in:pending,progress,completed',
             'due_date' => 'nullable|date',
         ]);
 
@@ -84,7 +84,7 @@ class TaskController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $task->projeto_id = $request->project_id;
+        $task->project_id = $request->project_id;
         $task->title = $request->title;
         $task->description = $request->description;
         $task->status = $request->status;
