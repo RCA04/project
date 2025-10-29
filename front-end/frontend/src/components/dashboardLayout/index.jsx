@@ -158,7 +158,9 @@ export default function DashboardLayout({ children }) {
         </header>
 
         {/* Page Content */}
-        <main className="p-6 overflow-auto bg-gray-50 flex-1">{children}</main>
+        <main className="p-6 overflow-auto bg-gray-50 flex-1">
+          {children}
+        </main>
       </div>
     </div>
   );
