@@ -2,12 +2,14 @@ import DashboardLayout from "../../components/dashboardLayout";
 import { useState } from "react";
 import { useEffect } from "react";
 import { UseAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import api from "../../axios";
 
 export default function Tasks() {
   const {token} = UseAuth();
-  const [tasks, setTasks] = useState();
-  const [loading, setLoading] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
       const fetchTasks = async () => {
@@ -43,10 +45,9 @@ export default function Tasks() {
             }
           });
           setTasks(prev => prev.filter(task => task.id !== id));
-          alert("Task deleted successfully!");
+          toast.success("Task deleted successfully!");
         } catch (error) {
           console.error("Error deleting task:", error);
-          alert("An error occurred while deleting the task.");
         }
       };
   
@@ -99,22 +100,24 @@ export default function Tasks() {
                     {task.title}
                   </td>
                 <td className="px-6 py-4 whitespace-nowrap text-gray-700">
+                  <div className="truncate w-25">
                   {task.description}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-gray-700">
-                  {task.dueDate}
+                  {task.due_date}
                 </td>
                   <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                     {task.status}
                   </td>
                 <td className="px-6 py-4 whitespace-nowrap flex gap-2">
-                  <button className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
+                  <Link to={`/tasks/details/${task.id}`} className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
                     View
-                  </button>
+                  </Link>
                   <Link to={`/tasks/edit/${task.id}`} className="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500 transition">
                     Edit
                   </Link>
-                  <button onClick={handleDelete} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
+                  <button onClick={()=>handleDelete(task.id)} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
                     Delete
                   </button>
                 </td>

@@ -92,7 +92,7 @@ export default function Projects() {
                   {project.description}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-gray-700">
-                  {project.dueDate}
+                  {project.due_date}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap flex gap-2">
                   <Link to={`/projects/details/${project.id}`} className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">

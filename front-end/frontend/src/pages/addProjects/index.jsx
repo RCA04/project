@@ -9,7 +9,7 @@ import {UseAuth} from "../../context/AuthContext"
 
 export default function AddProject() {
   
-    const {token, user} = UseAuth();   
+    const {token} = UseAuth();   
     const [data, setData] = useState({  
         name: '',
         description: '',

@@ -47,7 +47,7 @@ export default function ProjectDetails() {
               {ProjectDetails?.name || "Project Name not found"}
             </h2>
             <p className="text-gray-600 mb-4">
-              {ProjectDetails.description || "Project description not found."}
+              {ProjectDetails?.description || "Project description not found."}
             </p>
             <div className="flex flex-wrap gap-6">
               <div>

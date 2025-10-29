@@ -11,12 +11,13 @@ import {UseAuth} from "../../context/AuthContext"
 
 export default function AddTask() {
     
-    const {token} = UseAuth();  
+    const {token} = UseAuth();
     const [data, setData] = useState({
-        projectId:'',
+        project_id:'',
         title: '',
         description: '',
-        dueDate: ''
+        due_date: '',
+        status:'pending'
     });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -50,7 +51,6 @@ export default function AddTask() {
         setLoading(true)
 
         try{
-            //const token = localStorage.getItem("token");
             await api.post(`/tasks`, data,{
                 headers:{
                     Authorization: `Bearer ${token}`
@@ -69,12 +69,6 @@ export default function AddTask() {
             }
 
         }finally{
-            setData({
-                projectId:'',
-                title: '',
-                description: '',
-                dueDate: ''
-            })
             setLoading(false)
         }
     }
@@ -102,26 +96,18 @@ export default function AddTask() {
                 Select Project
               </label>
 
-              <select name="projectId" value={data.projectId}
+              <select name="project_id" value={data.project_id}
               className="mt-1 block w-full rounded-md border-gray-300 
               shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 onChange={handleChange}
               >
+                <option value='' label='Select a project'></option>
                 {projects.map((project) => (
-                  <option key={project.id} value={project.id}>
+                  <option  key={project.id} value={project.id}>
                     {project.name}
                   </option>
                 ))}
               </select>
-              <input
-                type="text"
-                placeholder="Enter project title"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
-                required
-                name="title"
-                value={data.title}
-                onChange={handleChange}
-              />
             </div>
             
             
@@ -133,7 +119,7 @@ export default function AddTask() {
               </label>
               <input
                 type="text"
-                placeholder="Enter project title"
+                placeholder="Enter Task title"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
                 name="title"
@@ -148,7 +134,7 @@ export default function AddTask() {
                 Description
               </label>
               <textarea
-                placeholder="Enter project description"
+                placeholder="Enter Task description"
                 rows="4"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
@@ -167,8 +153,8 @@ export default function AddTask() {
                 type="date"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                 required
-                name="dueDate"
-                value={data.dueDate}
+                name="due_date"
+                value={data.due_date}
                 onChange={handleChange}
               />
             </div>
@@ -176,10 +162,10 @@ export default function AddTask() {
             {/* Submit Button */}
             <div>
               <button
-                type="submit"
+                onClick={handleSubmit}
                 className="w-full bg-blue-600 text-white py-3 px-4 rounded-md shadow hover:bg-blue-700 transition"
               >
-                {loading ? "Adding..." : "Add Project"}
+                {loading ? "Adding..." : "Add Task"}
               </button>
             </div>
           </form>
