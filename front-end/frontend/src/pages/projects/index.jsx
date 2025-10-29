@@ -101,7 +101,7 @@ export default function Projects() {
                   <Link to={`/projects/edit/${project.id}`} className="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500 transition">
                     Edit
                   </Link>
-                  <button onClick={handleDelete} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
+                  <button onClick={()=>handleDelete(project.id)} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition">
                     Delete
                   </button>
                 </td>
