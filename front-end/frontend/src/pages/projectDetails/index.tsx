@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import api from "../../axios";
 import { UseAuth } from "../../context/AuthContext";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function ProjectDetails() {
 
@@ -37,9 +39,13 @@ export default function ProjectDetails() {
 
 
     return (
-
-        
         <DashboardLayout>
+
+      <div className="w-full flex-col flex mt-3 items-start">
+      <Link className="text-4xl text-cyan-500  hover:scale-110 transition-all duration-150" to='/projects'><FaArrowAltCircleLeft /></Link>
+      <p className="text-sm font-semibold text-gray-600">return</p>
+      </div>
+    
         <div className="p-6 bg-gray-50 min-h-screen">
           {/* Project Info Card */}
           <div className="bg-white shadow-md rounded-lg p-6 mb-8">

@@ -5,6 +5,7 @@ import { UseAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../axios";
+import { MdAddCircle } from "react-icons/md";
 
 export default function Tasks() {
   const {token} = UseAuth();
@@ -123,14 +124,17 @@ export default function Tasks() {
                 </td>
               </tr>
                 ))}
-
-
             </tbody>
           </table>
         </div>
         )}
-
+      
+      <div className="w-full flex-col flex mt-3 items-end">
+        <Link className="text-5xl text-cyan-500 hover:scale-110 transition-all duration-150" to='/tasks/add'><MdAddCircle/></Link>
+        <p className="text-sm font-semibold text-gray-600">add task</p>
       </div>
+     
+    </div>
     </DashboardLayout>
   );
 }

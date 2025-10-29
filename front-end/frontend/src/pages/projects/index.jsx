@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import DashboardLayout from "../../components/dashboardLayout";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { MdAddCircle } from "react-icons/md";
+
 
 export default function Projects() {
   
@@ -107,14 +109,14 @@ export default function Projects() {
                 </td>
               </tr>
                 ))}
-
-
-
-
             </tbody>
           </table>
         </div>
-        )}   
+        )}
+        <div className="w-full flex-col flex mt-3 items-end">
+          <Link className="text-5xl text-cyan-500  hover:scale-110 transition-all duration-150" to='/projects/add'><MdAddCircle/></Link>
+          <p className="text-sm font-semibold text-gray-600">add Project</p>
+        </div>
       </div>
     </DashboardLayout>
   );

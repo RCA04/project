@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/dashboardLayout";
 import { toast } from "react-toastify";
 import {UseAuth} from "../../context/AuthContext"
-
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 
@@ -83,6 +84,12 @@ export default function AddTask() {
   
     return (
     <DashboardLayout>
+
+      <div className="w-full flex-col flex mt-3 items-start">
+      <Link className="text-4xl text-cyan-500  hover:scale-110 transition-all duration-150" to='/tasks'><FaArrowAltCircleLeft /></Link>
+      <p className="text-sm font-semibold text-gray-600">return</p>
+      </div>
+
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="w-full bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
