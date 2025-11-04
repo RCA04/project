@@ -18,4 +18,4 @@ Route::post('/register', [AuthController::class, 'register']); // register route
 Route::post('/login', [AuthController::class, 'login']);    // login route
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::get('/dashboard-stats',[DashboardController::class, 'stats'])->middleware('auth:sanctum');
+Route::get('/dashboard-stats', [DashboardController::class, 'stats'])->middleware('auth:sanctum');

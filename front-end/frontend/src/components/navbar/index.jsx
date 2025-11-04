@@ -17,33 +17,30 @@ export default function Nav(){
       {/* Navbar */}
       <nav className="relative h-[70px] flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-white text-gray-900 transition-all shadow">
         {/* Text Logo */}
-        <Link to="/" className="text-2xl font-bold text-violet-600">
+        <Link to="/dashboard" className="text-2xl font-bold text-violet-600">
           PM-APP
         </Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center space-x-8 md:pl-28">
           <li>
-            <Link to="/" className="hover:text-violet-600">
-              Home
+            <Link to="/dashboard" className="hover:text-violet-600">
+              Dashboard
             </Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-violet-600">
+            <Link to="/about" className="hover:text-violet-600">
               About
             </Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-violet-600">
+            <Link to="/portfolio" className="hover:text-violet-600">
               Portfolio
             </Link>
           </li>
         </ul>
 
         {/* Desktop Button */}
-        <button className="md:inline hidden bg-white hover:bg-gray-50 border border-gray-300 ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
-          Get started
-        </button>
 
         {/* Mobile Menu Button */}
         <button
@@ -67,33 +64,21 @@ export default function Nav(){
           <div className="mobile-menu absolute top-[70px] left-0 w-full bg-white shadow-sm p-6 md:hidden">
             <ul className="flex flex-col space-y-4 text-lg">
               <li>
-                <a href="#" className="text-sm">
-                  Home
-                </a>
+                <Link to="/dashboard" className="text-sm">
+                  Dashboard
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm">
-                  Services
-                </a>
+                <Link href="/about" className="text-sm">
+                  About
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm">
+                <a href="/portfolio" className="text-sm">
                   Portfolio
                 </a>
               </li>
-              <li>
-                <a href="#" className="text-sm">
-                  Pricing
-                </a>
-              </li>
             </ul>
-
-            <button
-              type="button"
-              className="bg-white text-gray-600 border border-gray-300 mt-6 text-sm hover:bg-gray-50 active:scale-95 transition-all w-40 h-11 rounded-full"
-            >
-              Get started
-            </button>
           </div>
         )}
       </nav>

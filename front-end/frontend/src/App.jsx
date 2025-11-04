@@ -13,6 +13,8 @@ import AddTask from "./pages/addTask";
 import EditTask from "./pages/editTask";
 import ProjectDetails from "./pages/projectDetails";
 import TaskDetails from "./pages/taskDetails";
+import About from "./pages/about";
+import Portfolio from "./pages/portfolio"
 import { ToastContainer } from "react-toastify";
 
 function Layout(){
@@ -31,6 +33,9 @@ function Layout(){
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
+
+        <Route path="/about" element={<ProtectedRoute><About/></ProtectedRoute>}/>
+        <Route path="/portfolio" element={<ProtectedRoute><Portfolio/></ProtectedRoute>}/>
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/projects" element={<ProtectedRoute><Projects /></ProtectedRoute>} />
         <Route path="/projects/add" element={<ProtectedRoute><AddProject /></ProtectedRoute>} />
