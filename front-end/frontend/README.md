@@ -228,7 +228,7 @@ Este projeto está sob a licença MIT.
 
 ## 👨‍💻 Autor
 
-Desenvolvido como parte de um curso de React com Laravel.
+Ryan da Costa Araujo
 
 ---
 
