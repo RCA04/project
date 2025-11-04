@@ -15,21 +15,10 @@ import { UseAuth } from "../../context/AuthContext";
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  //const [userName, setUserName] = useState("");
   const navigate = useNavigate();
   const { user, logout} = UseAuth();
 
-
-
-  // Collapse sidebar by default on smaller screens
   useEffect(() => {
-
-    //const user = localStorage.getItem("user");
-    // if (user){
-    //   const userData = JSON.parse(user);
-    //   setUserName(userData.name);
-    // }
-
     if (window.innerWidth < 768) {
       setSidebarOpen(false);
     }
