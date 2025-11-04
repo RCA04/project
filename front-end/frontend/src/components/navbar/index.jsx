@@ -34,7 +34,7 @@ export default function Nav(){
             </Link>
           </li>
           <li>
-            <Link to="#" className="hover:text-violet-600">
+            <Link to="/portfolio" className="hover:text-violet-600">
               Portfolio
             </Link>
           </li>
@@ -74,7 +74,7 @@ export default function Nav(){
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-sm">
+                <a href="/portfolio" className="text-sm">
                   Portfolio
                 </a>
               </li>
