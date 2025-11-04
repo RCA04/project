@@ -24,7 +24,7 @@ export default function Projects() {
         });
         setProjects(response.data);
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.log(error);
       }finally{
         setLoading(false);
       }
@@ -46,6 +46,7 @@ export default function Projects() {
       setProjects(prev => prev.filter(project => project.id !== id));
       toast.success("Project deleted successfully!");
     } catch (error) {
+      console.log(error)
       toast.error("An error occurred while deleting the project.");
     }
   };

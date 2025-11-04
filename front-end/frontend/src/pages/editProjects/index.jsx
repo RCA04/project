@@ -45,8 +45,7 @@ export default function EditProject() {
               }
             }
             fetchProject();
-            console.log(data)
-      },[id, token]);
+      },[id, token, data]);
 
        const handleUpdate = async (e) => {
 

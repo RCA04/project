@@ -15,7 +15,6 @@ export default function TaskDetails() {
 
   const { id } = useParams();
   const [taskDetails, setTaskDetails] = useState({});
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     // Fetch project details from API (mocked here for demonstration)
@@ -28,15 +27,12 @@ export default function TaskDetails() {
         });
         setTaskDetails(response.data);
         console.log(response.data)
-        setLoading(false)
       }catch(error){
         console.log("Error fetching project details:", error);
-      }finally{
-        setLoading(true)
-      }    
+      }  
     }
     fetchTaskDetails();
-  },[id]);
+  },[id, token]);
 
 
     return (
