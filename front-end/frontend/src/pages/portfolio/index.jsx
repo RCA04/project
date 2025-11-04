@@ -86,24 +86,54 @@ function Portfolio(){
     ]
 
     return(
-        <div>
+        <div className="my-30" >
             <div>
-                <div>
-                <h1>ProjectMate</h1>
-                <span>breve resumo</span>
+                <div className="w-full flex flex-col align-center items-center">
+                <h1 className=" font-bold  text-5xl text-violet-600">ProjectMate</h1>
+                <span className=" mt-2.5 font-semibold text-base text-gray-700">breve resumo</span>
                 </div>
-                <div>    
-                    <p>resuminho</p>
-                    <div>
-                        <p>número de clientes no banco</p>
+                <div className="w-full mt-2.5 items-center text-center">    
+                    <p className="font-semibold">O ProjectMate é uma plataforma de gestão de projetos e tarefas<br/> desenvolvida para otimizar o fluxo de trabalho de empresas e equipes.</p>
+                    <p className="font-semibold">
+                        Nossa Missão é
+                        Empoderar profissionais com uma 
+                        solução completa e acessível de gerenciamento de projetos,<br/> 
+                        ajudando a trabalhar de forma mais inteligente 
+                        e organizada.
+                    </p>
+                    <div className="w-full mt-20 flex flex-col items-center text-center">
+                        <span className=" mt-2.5 font-semibold text-base text-gray-700">Total de Clientes</span>
+                        <h1 className=" font-bold mt-4  text-7xl text-violet-600">+ 60</h1>
                     </div>
                 </div>
             </div>
-                <div>
-                    <h1>Exemplo de Carteira de clientes</h1>
+                <div className="w-full  flex flex-col mt-20 align-center items-center">
+                    <h1 className=" font-bold  text-5xl text-violet-600">Feedback de Clientes</h1>
                 </div>
-            <div>
-                <p>cardclientes</p>
+            <div className="grid grid-cols-3 gap-10 w-full h-full my-10">
+                 {data.map((data) => (
+                <div key={data.id} className="bg-gray-200 hover:bg-gray-300 hover:scale-110 hover:shadow-purple-600/50 border-purple-300 duration-150 transition mx-10 max-w-150 shadow-2xl shadow-purple-500 border rounded-2xl p-2">
+                <h3 ><strong>{data.name} - {data.work}</strong></h3>
+                <div className="my-0.5">
+                <p className="text-purple-600"><strong>Desafio:</strong></p>
+                <p>
+                    {data.problem}
+                </p>
+                </div>
+                <div className="my-0.5">
+                <p className="text-purple-600"><strong>Solução:</strong></p>
+                <p>
+                {data.solution}
+                </p>
+                </div>
+                <div className="my-0.5">
+                <p className="text-purple-600"><strong>Feedback:</strong></p>
+                 <p>
+                 {data.response}
+                 </p>
+                </div>
+                </div>
+      ))}
             </div>
 
         </div>
