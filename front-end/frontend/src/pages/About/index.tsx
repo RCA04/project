@@ -31,16 +31,7 @@ return(
                     ✅ Criar e gerenciar múltiplos projetos;
                     </li>
                     <li>
-                    🗂️ Organizar tarefas por prioridade, status e prazos;
-                    </li>
-                    <li>
-                    👥 Acompanhar o progresso da equipe em tempo real;
-                    </li>
-                    <li>
-                    🔔 Receber notificações e lembretes para não perder prazos;
-                    </li>
-                    <li>
-                    📊 Visualizar métricas e relatórios de desempenho.<br/>
+                    🗂️ Organizar tarefas por prioridade e status;
                     </li>
                 </ul>
             </div>
