@@ -11,38 +11,37 @@ return(
             
             <div className="w-full items-center text-center">
                 <p className="font-semibold">
-                O ProjectMate é uma plataforma moderna de gerenciamento de projetos e tarefas, <br/> 
-                criada para ajudar profissionais a organizarem seu trabalho de forma prática, 
-                colaborativa e eficiente. <br/>
-                Com uma interface intuitiva e visual limpo, o ProjectMate permite que você crie e conclua projetos e tarefas com facilidade, <br/>
-                mantendo tudo centralizado em um só lugar.<br/>
+                ProjectMate is a modern project and task management platform, <br/> 
+                created to help professionals organize their work in a practical, 
+                collaborative, and efficient way. <br/>
+                With an intuitive interface and clean visuals, ProjectMate allows you to create and complete projects and tasks with ease. <br/>
+                keeping everything centralized in one place..<br/>
 
-                Nosso objetivo é simplificar a gestão do dia a dia, 
-                fornecendo ferramentas que aumentam a produtividade e promovem o trabalho em equipe.<br/>
+                Our goal is to simplify day-to-day management. 
+                providing tools that increase productivity and promote teamwork.<br/>
                 </p>
                 <p className="font-bold text-2xl mt-5">
-                Com o ProjectMate, você pode:<br/>
+                With ProjectMate, you can:<br/>
                 </p>
             </div>
 
             <div className="w-full text-center">
                 <ul className="flex flex-col gap-3 font-semibold">
                     <li>
-                    ✅ Criar e gerenciar múltiplos projetos;
+                    ✅ Create and manage multiple projects;
                     </li>
                     <li>
-                    🗂️ Organizar tarefas por prioridade e status;
+                    🗂️ Organize tasks by priority and status;
                     </li>
                 </ul>
             </div>
 
             <div className="w-full text-center">
                 <p className="font-semibold">
-                Mais do que uma ferramenta, o ProjectMate é o seu parceiro de produtividade.<br/>
-                Transforme ideias em resultados e mantenha seus projetos sempre sob controle.
+                More than just a tool, ProjectMate is your productivity partner.<br/>
+                Turn ideas into results and keep your projects always under control.
                 </p>
             </div>
-
         </div>
     </div>
 )
