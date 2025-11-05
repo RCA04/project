@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   FiHome,
   FiUser,
@@ -8,6 +9,7 @@ import {
   FiLogOut,
   FiMenu,
   FiChevronDown,
+  FiEdit3,
 } from "react-icons/fi";
 
 import { UseAuth } from "../../context/AuthContext";
@@ -91,7 +93,7 @@ export default function DashboardLayout({ children }) {
         {/* Footer */}
         <div className="p-4">
           <button onClick={handleLogout} className="w-full flex items-center gap-3 text-sm text-gray-700 hover:text-red-500">
-            <FiLogOut />
+            <FiLogOut /> 
             {sidebarOpen && "Logout"}
           </button>
         </div>
@@ -137,8 +139,9 @@ export default function DashboardLayout({ children }) {
 
             {/* Dropdown */}
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-2">
-                <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center gap-2">
+              <div className="absolute flex-col right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-2">
+                <Link to='/edit-user' className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center gap-2"> <FiEdit3/> Edit</Link>
+                <button onClick={handleLogout} className=" cursor-pointer w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center gap-2">
                   <FiLogOut /> Logout
                 </button>
               </div>

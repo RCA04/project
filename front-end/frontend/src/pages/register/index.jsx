@@ -16,7 +16,8 @@ function Register(){
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        photo:'no image'
     })
 
 
@@ -29,17 +30,11 @@ function Register(){
             const token = response.token
             localStorage.setItem("token", token)
             toast.success(response.message)
-            navigate('/dashboard')
+            navigate('/welcome')
         }catch(error){
-                toast.error("An error occurred. Please try again.", error)
-        }finally{
-            setFormData({
-                name: '',
-                email: '',
-                password: ''
-            })
+                console.log(error)
+                toast.error("An error occurred. Please try again.")
         }
-
 
     }
 
