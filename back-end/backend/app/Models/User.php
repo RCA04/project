@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_photo'
+        'profile_photo',
     ];
 
     /**
@@ -43,8 +43,8 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-
-    public function getPhotoUrlAtribbute(): ?string{
+    public function getPhotoUrlAtribbute(): ?string
+    {
         return $this->profile_photo
         ? Storage::url($this->profile_photo)
         : null;
