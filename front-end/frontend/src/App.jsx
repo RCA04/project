@@ -15,13 +15,15 @@ import ProjectDetails from "./pages/projectDetails";
 import TaskDetails from "./pages/taskDetails";
 import About from "./pages/about";
 import Portfolio from "./pages/portfolio"
+import Welcome from "./pages/welcome";
+import EditUser from "./pages/editUser";
 import { ToastContainer } from "react-toastify";
 
 function Layout(){
   const location = useLocation();
 
   //show Navbar only on specific routes
-  const hideNavbarRoutes = ["/login", "/register" , "/"].includes(location.pathname);
+  const hideNavbarRoutes = ["/login", "/register" , "/", '/welcome'].includes(location.pathname);
 
 
   return(
@@ -34,6 +36,8 @@ function Layout(){
         <Route path="/register" element={<Register />} />
 
 
+        <Route path="/welcome" element={<ProtectedRoute><Welcome/></ProtectedRoute>}/>
+        <Route path="/edit-user" element={<ProtectedRoute><EditUser/></ProtectedRoute>}/>
         <Route path="/about" element={<ProtectedRoute><About/></ProtectedRoute>}/>
         <Route path="/portfolio" element={<ProtectedRoute><Portfolio/></ProtectedRoute>}/>
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
