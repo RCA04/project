@@ -16,9 +16,9 @@ class UserController extends Controller
     /**
      * Atualiza os dados do perfil do usuário
      * Suporta atualização de nome e foto de perfil
-     * 
-     * @param Request $request Dados atualizados (name, photo)
-     * @param int $id ID do usuário
+     *
+     * @param  Request  $request  Dados atualizados (name, photo)
+     * @param  int  $id  ID do usuário
      * @return \Illuminate\Http\JsonResponse Dados atualizados do usuário
      */
     public function update(Request $request, int $id)
@@ -39,7 +39,7 @@ class UserController extends Controller
                 if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
                     Storage::disk('public')->delete($user->profile_photo);
                 }
-                
+
                 // Salva a nova foto no storage
                 $user->profile_photo = $request->file('photo')->store('photos', 'public');
             }
@@ -56,20 +56,20 @@ class UserController extends Controller
                 'user' => $user,
                 'photo_url' => $user->profile_photo ? Storage::url($user->profile_photo) : null,
             ], 200);
-            
+
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Retorna erros de validação
             return response()->json([
                 'message' => 'Erro de validação',
                 'errors' => $e->errors(),
             ], 422);
-            
+
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             // Retorna erro se o usuário não for encontrado
             return response()->json([
                 'message' => 'Usuário não encontrado',
             ], 404);
-            
+
         } catch (\Exception $e) {
             // Retorna erro genérico
             return response()->json([

@@ -15,7 +15,7 @@ class DashboardController extends Controller
     /**
      * Retorna estatísticas do dashboard do usuário autenticado
      * Inclui contagem de projetos e tarefas
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse Estatísticas do dashboard
      */
     public function stats()

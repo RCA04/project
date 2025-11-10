@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     /**
      * Define os tipos de cast para os atributos
-     * 
+     *
      * @return array<string, string>
      */
     protected function casts(): array
@@ -54,7 +54,7 @@ class User extends Authenticatable
 
     /**
      * Relacionamento: Um usuário possui muitos projetos
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function projects()
@@ -64,7 +64,7 @@ class User extends Authenticatable
 
     /**
      * Relacionamento: Um usuário possui muitas tarefas
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tasks()

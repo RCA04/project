@@ -66,6 +66,6 @@ export const updateUserService = async (userId, data, token, isFormData = false)
         return response.data;
     } catch (error) {
         // Propaga o erro para ser tratado pelo componente
-        throw error;
+        console.log(error);
     }
 };

@@ -26,16 +26,16 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     // Autenticação
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+
     // Recursos de Projetos (CRUD completo)
     Route::apiResource('projects', ProjectController::class);
-    
+
     // Recursos de Tarefas (CRUD completo)
     Route::apiResource('tasks', TaskController::class);
-    
+
     // Dashboard
     Route::get('/dashboard-stats', [DashboardController::class, 'stats']);
-    
+
     // Perfil do usuário
     Route::put('/update-user/{id}', [UserController::class, 'update']);
 });

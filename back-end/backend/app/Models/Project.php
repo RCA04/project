@@ -12,7 +12,7 @@ class Project extends Model
 {
     /**
      * Campos que podem ser preenchidos em massa
-     * 
+     *
      * @var array<string>
      */
     protected $fillable = [
@@ -24,7 +24,7 @@ class Project extends Model
 
     /**
      * Relacionamento: Um projeto possui muitas tarefas
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tasks()
@@ -34,7 +34,7 @@ class Project extends Model
 
     /**
      * Relacionamento: Um projeto pertence a um usuário
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
