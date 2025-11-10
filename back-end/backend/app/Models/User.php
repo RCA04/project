@@ -36,7 +36,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // protected $appends = ['photo_url'];
+    
 
     /**
      * Get the attributes that should be cast.
@@ -44,12 +44,7 @@ class User extends Authenticatable
      * @return array<string, string>
      */
 
-    // public function getPhotoUrlAtribbute(): ?string
-    // {
-    //     return $this->profile_photo
-    //     ? Storage::url($this->profile_photo)
-    //     : null;
-    // }
+  
 
     protected function casts(): array
     {
