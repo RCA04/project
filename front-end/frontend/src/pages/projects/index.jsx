@@ -1,54 +1,71 @@
 import api from "../../axios";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import DashboardLayout from "../../components/dashboardLayout";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdAddCircle } from "react-icons/md";
 
-
+/**
+ * Componente de Listagem de Projetos
+ * Exibe todos os projetos do usuário em uma tabela
+ * Permite visualizar, editar e excluir projetos
+ */
 export default function Projects() {
-  
+    // Estado para armazenar a lista de projetos
     const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(false);
+    
+    // Estado para controlar o loading durante o carregamento
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await api.get("/projects", {
-            headers: {
-                Authorization: `Bearer ${token}`
+    /**
+     * Busca os projetos do usuário ao carregar o componente
+     */
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                setLoading(true);
+                const token = localStorage.getItem("token");
+                const response = await api.get("/projects", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setProjects(response.data);
+            } catch (error) {
+                console.error("Erro ao buscar projetos:", error);
+                toast.error("Erro ao carregar projetos.");
+            } finally {
+                setLoading(false);
             }
-        });
-        setProjects(response.data);
-      } catch (error) {
-        console.log(error);
-      }finally{
-        setLoading(false);
-      }
-    };
+        };
 
-    fetchProjects();
-  }, []);
+        fetchProjects();
+    }, []);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this project?");
-    if (!confirmDelete) return;
-    try {
-      const token = localStorage.getItem("token");
-       await api.delete(`/projects/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
+    /**
+     * Exclui um projeto após confirmação do usuário
+     * @param {number} id - ID do projeto a ser excluído
+     */
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+        if (!confirmDelete) return;
+        
+        try {
+            const token = localStorage.getItem("token");
+            await api.delete(`/projects/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            
+            // Remove o projeto da lista local
+            setProjects(prev => prev.filter(project => project.id !== id));
+            toast.success("Project deleted successfully!");
+        } catch (error) {
+            console.error("Erro ao excluir projeto:", error);
+            toast.error("An error occurred while deleting the project.");
         }
-      });
-      setProjects(prev => prev.filter(project => project.id !== id));
-      toast.success("Project deleted successfully!");
-    } catch (error) {
-      console.log(error)
-      toast.error("An error occurred while deleting the project.");
-    }
-  };
+    };
 
   return (
     <DashboardLayout>

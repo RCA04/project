@@ -2,22 +2,24 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Model User
+ * Representa um usuário no sistema
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Campos que podem ser preenchidos em massa
      *
-     * @var list<string>
+     * @var array<string>
      */
     protected $fillable = [
         'name',
@@ -27,30 +29,46 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Campos que devem ser ocultados na serialização
+     * (não aparecem em respostas JSON)
      *
-     * @var list<string>
+     * @var array<string>
      */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    
-
     /**
-     * Get the attributes that should be cast.
-     *
+     * Define os tipos de cast para os atributos
+     * 
      * @return array<string, string>
      */
-
-  
-
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password' => 'hashed', // A senha é automaticamente hasheada
         ];
+    }
+
+    /**
+     * Relacionamento: Um usuário possui muitos projetos
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    /**
+     * Relacionamento: Um usuário possui muitas tarefas
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

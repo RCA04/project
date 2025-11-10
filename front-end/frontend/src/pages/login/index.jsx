@@ -1,60 +1,61 @@
-import React from "react"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
-import api from "../../axios"
-import { toast } from "react-toastify"
-import {UseAuth} from "../../context/AuthContext"
-import { loginService } from "../../services/authServices"
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { UseAuth } from "../../context/AuthContext";
+import { loginService } from "../../services/authServices";
 
- 
- function Login(){
+/**
+ * Componente de Login
+ * Permite ao usuário fazer login na aplicação
+ */
+function Login() {
+    const navigate = useNavigate();
+    const { login } = UseAuth();
 
+    // Estado para controlar se está em modo login ou registro (não utilizado atualmente)
+    const [state, setState] = useState("login");
 
-    const [state, setState] = useState("login")
-    const navigate = useNavigate()
-    const {login} = UseAuth();
-
+    // Estado para armazenar os dados do formulário
     const [formData, setFormData] = useState({
         email: '',
         password: ''
-    })
+    });
 
-
+    /**
+     * Manipula o envio do formulário de login
+     * Autentica o usuário e redireciona para o dashboard
+     */
     const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        e.preventDefault()
-
-        try{
-            const response = await loginService(formData)
-            console.log(response)
-            const token = response.token
-            const user = response.user;
-            login(token, user)
-            toast.success(response.message)
-            navigate("/dashboard")
-        }catch(error){
-                toast.error("An error occurred. Please try again.", error)
-                console.log(error)
-
-        }finally{
+        try {
+            const response = await loginService(formData);
+            const { token, user } = response;
+            
+            // Atualiza o contexto de autenticação
+            login(token, user);
+            toast.success(response.message);
+            navigate("/dashboard");
+        } catch(error) {
+            toast.error("An error occurred. Please try again.");
+            console.error("Erro no login:", error);
+        } finally {
+            // Limpa o formulário após a tentativa
             setFormData({
                 email: '',
                 password: ''
-            })
+            });
         }
+    };
 
-
-    }
-
-
+    /**
+     * Manipula mudanças nos campos do formulário
+     * Atualiza o estado com os valores digitados
+     */
     const handleChange = (e) => {
-
-        const { name, value } = e.target
-
-        setFormData(prev => ({ ...prev, [name]: value }))
-
-    }
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
 
     return ( 

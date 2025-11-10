@@ -81,7 +81,7 @@ function Welcome(){
 
     return(
         <div className="h-screen w-full">
-            <div className="w-full h-screen flex justify-center items-center ">
+            <div className="w-full h-screen flex justify-center items-center">
                 <div className="border border-purple-300 bg-slate-300 min-h-120 min-w-75 max-w-750 max-h-120 shadow-2xl shadow-purple-800">
                     <div className="flex flex-col text-center">
                         <p>Hi, Welcome:</p>
