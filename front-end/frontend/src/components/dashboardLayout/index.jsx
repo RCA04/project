@@ -11,6 +11,8 @@ import {
   FiChevronDown,
   FiEdit3,
 } from "react-icons/fi";
+import api from "../../axios";
+
 
 import { UseAuth } from "../../context/AuthContext";
 
@@ -19,6 +21,8 @@ export default function DashboardLayout({ children }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout} = UseAuth();
+  const [photoPreview, setPhotoPreview] = useState(null);
+
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -26,11 +30,25 @@ export default function DashboardLayout({ children }) {
     }
   }, []);
 
-  // Handle logout
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
+
+      const getPhotoUrl = () => {
+        if (photoPreview) return photoPreview;
+        const p = user?.profile_photo;
+        if (!p) return null;
+        if (typeof p !== 'string') return null;
+        if (p.startsWith('http')) return p;
+        // base host derivada do api.defaults.baseURL
+        const apiBase = api?.defaults?.baseURL || '';
+        const host = apiBase.replace(/\/?api\/?$/, '');
+        if (p.startsWith('/storage')) return `${host}${p}`;
+        if (p.startsWith('storage')) return `${host}/${p}`;
+        return `${host}/storage/${p}`;
+    };
+
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -123,7 +141,7 @@ export default function DashboardLayout({ children }) {
               className="flex items-center gap-2 md:gap-3 focus:outline-none"
             >
               <img
-                src="https://i.pravatar.cc/40"
+                src={getPhotoUrl()}
                 alt="User Avatar"
                 className="w-10 h-10 rounded-full border"
               />
