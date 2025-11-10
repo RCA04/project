@@ -1,7 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom";
 import { useState } from "react"
-import api from "../../axios"
 import { toast } from "react-toastify";
 import { registerService } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";

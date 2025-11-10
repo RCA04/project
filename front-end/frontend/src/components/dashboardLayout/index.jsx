@@ -21,7 +21,7 @@ export default function DashboardLayout({ children }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout} = UseAuth();
-  const [photoPreview, setPhotoPreview] = useState(null);
+  const photoPreview = useState(null);
 
 
   useEffect(() => {
