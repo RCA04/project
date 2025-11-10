@@ -12,7 +12,7 @@ class Task extends Model
 {
     /**
      * Campos que podem ser preenchidos em massa
-     * 
+     *
      * @var array<string>
      */
     protected $fillable = [
@@ -26,7 +26,7 @@ class Task extends Model
 
     /**
      * Relacionamento: Uma tarefa pertence a um projeto
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function project()
@@ -36,7 +36,7 @@ class Task extends Model
 
     /**
      * Relacionamento: Uma tarefa pertence a um usuário
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()

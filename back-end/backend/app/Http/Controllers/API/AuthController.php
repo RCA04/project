@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,8 +16,8 @@ class AuthController extends Controller
 {
     /**
      * Registra um novo usuário no sistema
-     * 
-     * @param Request $request Dados do formulário (name, email, password)
+     *
+     * @param  Request  $request  Dados do formulário (name, email, password)
      * @return \Illuminate\Http\JsonResponse Token e dados do usuário criado
      */
     public function register(Request $request)
@@ -51,8 +50,8 @@ class AuthController extends Controller
 
     /**
      * Autentica um usuário existente
-     * 
-     * @param Request $request Dados do formulário (email, password)
+     *
+     * @param  Request  $request  Dados do formulário (email, password)
      * @return \Illuminate\Http\JsonResponse Token e dados do usuário
      */
     public function login(Request $request)
@@ -72,7 +71,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         // Verifica se o usuário existe e se a senha está correta
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
@@ -90,8 +89,7 @@ class AuthController extends Controller
     /**
      * Realiza logout do usuário autenticado
      * Revoga o token de acesso atual
-     * 
-     * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse Mensagem de sucesso
      */
     public function logout(Request $request)

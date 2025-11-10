@@ -16,7 +16,7 @@ class TaskController extends Controller
     /**
      * Lista todas as tarefas do usuário autenticado
      * Inclui os dados do projeto associado
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse Lista de tarefas
      */
     public function index()
@@ -29,8 +29,8 @@ class TaskController extends Controller
 
     /**
      * Cria uma nova tarefa
-     * 
-     * @param Request $request Dados da tarefa (project_id, title, description, status, due_date)
+     *
+     * @param  Request  $request  Dados da tarefa (project_id, title, description, status, due_date)
      * @return \Illuminate\Http\JsonResponse Tarefa criada
      */
     public function store(Request $request)
@@ -68,16 +68,16 @@ class TaskController extends Controller
     /**
      * Exibe os detalhes de uma tarefa específica
      * Inclui os dados do projeto associado
-     * 
-     * @param string $id ID da tarefa
+     *
+     * @param  string  $id  ID da tarefa
      * @return \Illuminate\Http\JsonResponse Dados da tarefa com projeto
      */
     public function show(string $id)
     {
         // Busca a tarefa com o projeto relacionado
         $task = Task::with('project')->find($id);
-        
-        if (!$task) {
+
+        if (! $task) {
             return response()->json(['message' => 'Task not found'], 404);
         }
 
@@ -86,17 +86,17 @@ class TaskController extends Controller
 
     /**
      * Atualiza uma tarefa existente
-     * 
-     * @param Request $request Dados atualizados da tarefa
-     * @param string $id ID da tarefa
+     *
+     * @param  Request  $request  Dados atualizados da tarefa
+     * @param  string  $id  ID da tarefa
      * @return \Illuminate\Http\JsonResponse Tarefa atualizada
      */
     public function update(Request $request, string $id)
     {
         // Busca a tarefa
         $task = Task::find($id);
-        
-        if (!$task) {
+
+        if (! $task) {
             return response()->json(['message' => 'Task not found'], 404);
         }
 
@@ -128,16 +128,16 @@ class TaskController extends Controller
 
     /**
      * Remove uma tarefa do sistema
-     * 
-     * @param string $id ID da tarefa
+     *
+     * @param  string  $id  ID da tarefa
      * @return \Illuminate\Http\JsonResponse Mensagem de sucesso
      */
     public function destroy(string $id)
     {
         // Busca a tarefa
         $task = Task::find($id);
-        
-        if (!$task) {
+
+        if (! $task) {
             return response()->json(['message' => 'Task not found'], 404);
         }
 
