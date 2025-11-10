@@ -13,7 +13,6 @@ export default function Projects() {
     const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Fetch projects from API (placeholder code)
     const fetchProjects = async () => {
       try {
         const token = localStorage.getItem("token");

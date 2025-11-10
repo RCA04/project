@@ -17,7 +17,6 @@ export default function TaskDetails() {
   const [taskDetails, setTaskDetails] = useState({});
 
   useEffect(() => {
-    // Fetch project details from API (mocked here for demonstration)
     const fetchTaskDetails = async () => {
       try{
         const response = await api.get(`/tasks/${id}`, {

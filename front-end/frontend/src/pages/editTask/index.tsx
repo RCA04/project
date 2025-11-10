@@ -25,10 +25,8 @@ export default function EditTask() {
 
 
     useEffect(() => {
-        // Fetch projects from API (placeholder code)
         const fetchTasksAndProjects = async () => {
           try {
-            //const token = localStorage.getItem("token");
             const response = await api.get("/projects", {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -36,7 +34,6 @@ export default function EditTask() {
             });
             setProjects(response.data);
 
-            //get task data
 
             const responseTask = await api.get(`/tasks/${id}`, {
                 headers: {
