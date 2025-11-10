@@ -1,32 +1,45 @@
 import api from "../axios";
 import axios from "axios";
 
+/**
+ * Serviço de Autenticação
+ * Centraliza todas as chamadas de API relacionadas à autenticação
+ */
 
-//HandleLogin
-
-export const loginService = async (formData) =>{
+/**
+ * Realiza o login do usuário
+ * @param {Object} formData - Dados do formulário (email, password)
+ * @returns {Promise<Object>} Resposta da API com token e dados do usuário
+ */
+export const loginService = async (formData) => {
     const response = await api.post('/login', formData);
-    return response.data
+    return response.data;
 };
 
+/**
+ * Registra um novo usuário
+ * @param {Object} formData - Dados do formulário (name, email, password)
+ * @returns {Promise<Object>} Resposta da API com token e dados do usuário
+ */
 export const registerService = async (formData) => {
-  const response = await api.post('/register', formData);
-    return response.data
+    const response = await api.post('/register', formData);
+    return response.data;
+};
 
-}
-
-// Handle Update User
+/**
+ * Atualiza os dados do usuário
+ * Suporta atualização com ou sem upload de foto
+ * @param {number} userId - ID do usuário a ser atualizado
+ * @param {Object|FormData} data - Dados a serem atualizados
+ * @param {string} token - Token de autenticação
+ * @param {boolean} isFormData - Indica se os dados são FormData (para upload de arquivo)
+ * @returns {Promise<Object>} Resposta da API com dados atualizados do usuário
+ */
 export const updateUserService = async (userId, data, token, isFormData = false) => {
     try {
-        console.log("updateUserService chamado:", {
-            userId,
-            token: token ? "Token presente" : "Token ausente",
-            isFormData,
-            data: isFormData ? `FormData com ${Array.from(data.keys()).length} campos` : data
-        });
-
         let response;
         
+        // Se for FormData (upload de foto), usa uma instância do axios com configuração específica
         if (isFormData) {
             const axiosInstance = axios.create({
                 baseURL: 'http://localhost:8000/api',
@@ -35,13 +48,14 @@ export const updateUserService = async (userId, data, token, isFormData = false)
                 }
             });
 
-            // IMPORTANTE: Enviar como POST com _method=PUT para uploads multipart
+            // Envia como POST para suportar multipart/form-data
             response = await axiosInstance.post(`/update-user/${userId}`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
         } else {
+            // Para dados JSON normais, usa PUT
             response = await api.put(`/update-user/${userId}`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -49,13 +63,9 @@ export const updateUserService = async (userId, data, token, isFormData = false)
             });
         }
 
-        console.log("Resposta do servidor:", response);
         return response.data;
     } catch (error) {
-        console.error("Erro no updateUserService:", error);
-        console.error("URL da requisição:", error.config?.url);
-        console.error("Status:", error.response?.status);
-        console.error("Dados do erro:", error.response?.data);
+        // Propaga o erro para ser tratado pelo componente
         throw error;
     }
-}
+};

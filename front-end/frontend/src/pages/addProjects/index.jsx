@@ -7,61 +7,69 @@ import {UseAuth} from "../../context/AuthContext"
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-
+/**
+ * Componente para adicionar um novo projeto
+ * Permite ao usuário criar um projeto com nome, descrição e data de vencimento
+ */
 export default function AddProject() {
-  
+    // Obtém o token de autenticação do contexto
     const {token} = UseAuth();   
+    
+    // Estado para armazenar os dados do formulário
     const [data, setData] = useState({  
         name: '',
         description: '',
         due_date: ''
     });
 
+    // Estado para controlar o loading durante a submissão
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-       const handleSubmit = async (e) => {
+    /**
+     * Manipula o envio do formulário
+     * Cria um novo projeto através da API
+     */
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
 
-        e.preventDefault()
-        setLoading(true)
-
-        try{
-            //const token = localStorage.getItem("token");
-            await api.post(`/projects`, data,{
-                headers:{
+        try {
+            // Envia os dados do projeto para a API
+            await api.post(`/projects`, data, {
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
-
-              });
-              console.log(data)
-            toast.success('Project added successfully')
+            });
+            
+            toast.success('Project added successfully');
             navigate("/projects");
-        }catch(error){
-          console.log(data)
-            if(error.response  && error.response.data.message){
-            toast.error('Project error to add project')
-           
-            }else{
-                toast.error("An error occurred. Please try again.")
+        } catch(error) {
+            // Trata erros de validação ou outros erros da API
+            if(error.response && error.response.data.message) {
+                toast.error('Project error to add project');
+            } else {
+                toast.error("An error occurred. Please try again.");
             }
-
-        }finally{
+        } finally {
+            // Limpa o formulário e remove o estado de loading
             setData({
                 name: '',
                 description: '',
                 due_date: ''
-            })
-            setLoading(false)
+            });
+            setLoading(false);
         }
-    }
+    };
 
-        const handleChange = (e) => {
-
-        const { name, value } = e.target
-
-        setData(prev => ({ ...prev, [name]: value }))
-
-    }
+    /**
+     * Manipula mudanças nos campos do formulário
+     * Atualiza o estado com os valores digitados
+     */
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData(prev => ({ ...prev, [name]: value }));
+    };
   
     return (
     <DashboardLayout>
