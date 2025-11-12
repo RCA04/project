@@ -5,7 +5,7 @@ import axios from "axios";
  * Define a URL base e headers padrão para todas as requisições
  */
 const api = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
         Accept: "application/json",
     },
