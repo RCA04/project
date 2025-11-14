@@ -4,6 +4,7 @@ import DashboardLayout from "../../components/dashboardLayout";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdAddCircle } from "react-icons/md";
+import { UseAuth } from "../../context/AuthContext";
 
 /**
  * Componente de Listagem de Projetos
@@ -11,6 +12,9 @@ import { MdAddCircle } from "react-icons/md";
  * Permite visualizar, editar e excluir projetos
  */
 export default function Projects() {
+    // Obtém o token de autenticação do contexto
+    const {token} = UseAuth();
+    
     // Estado para armazenar a lista de projetos
     const [projects, setProjects] = useState([]);
     
@@ -22,9 +26,13 @@ export default function Projects() {
      */
     useEffect(() => {
         const fetchProjects = async () => {
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+            
             try {
                 setLoading(true);
-                const token = localStorage.getItem("token");
                 const response = await api.get("/projects", {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -40,7 +48,7 @@ export default function Projects() {
         };
 
         fetchProjects();
-    }, []);
+    }, [token]);
 
     /**
      * Exclui um projeto após confirmação do usuário
@@ -51,7 +59,6 @@ export default function Projects() {
         if (!confirmDelete) return;
         
         try {
-            const token = localStorage.getItem("token");
             await api.delete(`/projects/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`

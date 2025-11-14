@@ -29,8 +29,7 @@ export default function EditProject() {
                // const token = localStorage.getItem("token");
                const response = await api.get(`/projects/${id}`, {
                     headers: {
-                      Authorization: `Bearer ${token}`,
-                      body: JSON.stringify(data)
+                      Authorization: `Bearer ${token}`
                     }
                   });
                   setData({
@@ -42,10 +41,11 @@ export default function EditProject() {
                   console.log(response.data)
               } catch (error) {
                 console.error("Error fetching project:", error);
+                toast.error("Erro ao carregar projeto.");
               }
             }
             fetchProject();
-      },[id, token, data]);
+      },[id, token]);
 
        const handleUpdate = async (e) => {
 
@@ -62,12 +62,25 @@ export default function EditProject() {
             });
             toast.success("Project edited successfully!");
         }catch(error){
-            if(error  && error.data.message){
-                toast.error(error.data.message)
-            }else{
-                toast.error("An error occurred. Please try again.")
+            console.error("Erro ao editar projeto:", error);
+            // Trata erros de validação ou outros erros da API
+            if (error.response?.status === 400) {
+                const errorMessage = error.validationMessage || error.response?.data?.message || "Dados inválidos. Verifique as informações do projeto.";
+                toast.error(errorMessage);
+            } else if (error.response?.status === 422) {
+                // Erros de validação do Laravel
+                if (error.response?.data?.errors) {
+                    const firstError = Object.values(error.response.data.errors)[0];
+                    const errorMessage = Array.isArray(firstError) ? firstError[0] : firstError;
+                    toast.error(errorMessage);
+                } else {
+                    toast.error(error.response?.data?.message || "Erro de validação. Verifique os dados informados.");
+                }
+            } else if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("An error occurred. Please try again.");
             }
-
         }finally{
             setData({
                 name: '',

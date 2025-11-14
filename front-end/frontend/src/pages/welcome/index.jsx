@@ -4,7 +4,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { UseAuth } from "../../context/AuthContext";
 import { updateUserService } from "../../services/authServices";
 import { toast } from "react-toastify";
-import api from "../../axios";
+import { getPhotoUrl as getPhotoUrlHelper } from "../../utils/apiHelpers";
 
 function Welcome(){
     const { user, token, updateUser } = UseAuth();
@@ -50,10 +50,22 @@ function Welcome(){
 
             const response = await updateUserService(user.id, formData, token, true);
             
+            console.log('Resposta do updateUserService:', response);
+            
+            // Tenta obter a URL da foto de diferentes formas possíveis
+            const photoUrl = response?.photo_url 
+                || response?.user?.profile_photo 
+                || response?.profile_photo
+                || response?.user?.photo_url;
+            
+            console.log('URL da foto obtida:', photoUrl);
+            
             const updatedUser = {
                 ...response.user,
-                profile_photo: response.photo_url || response.user.profile_photo
+                profile_photo: photoUrl || user.profile_photo
             };
+            
+            console.log('Usuário atualizado:', updatedUser);
             updateUser(updatedUser);
             
             toast.success("Foto de perfil atualizada com sucesso!");
@@ -68,15 +80,7 @@ function Welcome(){
 
     const getPhotoUrl = () => {
         if (photoPreview) return photoPreview;
-        const p = user?.profile_photo;
-        if (!p) return null;
-        if (typeof p !== 'string') return null;
-        if (p.startsWith('http')) return p;
-        const apiBase = api?.defaults?.baseURL || '';
-        const host = apiBase.replace(/\/?api\/?$/, '');
-        if (p.startsWith('/storage')) return `${host}${p}`;
-        if (p.startsWith('storage')) return `${host}/${p}`;
-        return `${host}/storage/${p}`;
+        return getPhotoUrlHelper(user?.profile_photo);
     };
 
     return(

@@ -46,11 +46,24 @@ export default function AddProject() {
             navigate("/projects");
         } catch(error) {
             // Trata erros de validação ou outros erros da API
-            if(error.response && error.response.data.message) {
-                toast.error('Project error to add project');
+            if (error.response?.status === 400) {
+                const errorMessage = error.validationMessage || error.response?.data?.message || "Dados inválidos. Verifique as informações do projeto.";
+                toast.error(errorMessage);
+            } else if (error.response?.status === 422) {
+                // Erros de validação do Laravel
+                if (error.response?.data?.errors) {
+                    const firstError = Object.values(error.response.data.errors)[0];
+                    const errorMessage = Array.isArray(firstError) ? firstError[0] : firstError;
+                    toast.error(errorMessage);
+                } else {
+                    toast.error(error.response?.data?.message || "Erro de validação. Verifique os dados informados.");
+                }
+            } else if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
             } else {
                 toast.error("An error occurred. Please try again.");
             }
+            console.error("Erro ao adicionar projeto:", error);
         } finally {
             // Limpa o formulário e remove o estado de loading
             setData({
