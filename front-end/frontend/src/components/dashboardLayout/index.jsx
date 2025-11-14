@@ -11,17 +11,14 @@ import {
   FiChevronDown,
   FiEdit3,
 } from "react-icons/fi";
-import api from "../../axios";
-
-
 import { UseAuth } from "../../context/AuthContext";
+import { getPhotoUrl as getPhotoUrlHelper } from "../../utils/apiHelpers";
 
 export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout} = UseAuth();
-  const photoPreview = useState(null);
 
 
   useEffect(() => {
@@ -36,17 +33,7 @@ export default function DashboardLayout({ children }) {
   };
 
       const getPhotoUrl = () => {
-        if (photoPreview) return photoPreview;
-        const p = user?.profile_photo;
-        if (!p) return null;
-        if (typeof p !== 'string') return null;
-        if (p.startsWith('http')) return p;
-        // base host derivada do api.defaults.baseURL
-        const apiBase = api?.defaults?.baseURL || '';
-        const host = apiBase.replace(/\/?api\/?$/, '');
-        if (p.startsWith('/storage')) return `${host}${p}`;
-        if (p.startsWith('storage')) return `${host}/${p}`;
-        return `${host}/storage/${p}`;
+        return getPhotoUrlHelper(user?.profile_photo);
     };
 
 
@@ -141,9 +128,12 @@ export default function DashboardLayout({ children }) {
               className="flex items-center gap-2 md:gap-3 focus:outline-none"
             >
               <img
-                src={getPhotoUrl()}
+                src={getPhotoUrl() || '/default-avatar.png'}
                 alt="User Avatar"
-                className="w-10 h-10 rounded-full border"
+                className="w-10 h-10 rounded-full border object-cover"
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNEOUQ5RDkiLz4KPHBhdGggZD0iTTIwIDEwQzE2LjY4NjYgMTAgMTQgMTIuNjg2NiAxNCAxNkMxNCAxOS4zMTM0IDE2LjY4NjYgMjIgMjAgMjJDMjMuMzEzNCAyMiAyNiAxOS4zMTM0IDI2IDE2QzI2IDEyLjY4NjYgMjMuMzEzNCAxMCAyMCAxMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHBhdGggZD0iTTIwIDI0QzE1LjU4MTcgMjQgMTIgMjUuNTgxNyAxMiAzMEwxMiAzMkgyOEwyOCAzMEMyOCAyNS41ODE3IDI0LjQxODMgMjQgMjAgMjRaIiBmaWxsPSIjOUNBM0FGIi8+Cjwvc3ZnPgo=';
+                }}
               />
               <span className="hidden md:flex items-center text-gray-700 font-medium gap-1">
                 Welcome, {user?.name || "User"}

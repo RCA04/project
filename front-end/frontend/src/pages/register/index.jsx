@@ -31,8 +31,23 @@ function Register(){
             toast.success(response.message)
             navigate('/welcome')
         }catch(error){
-                console.log(error)
-                toast.error("An error occurred. Please try again.")
+            console.error("Erro no registro:", error);
+            // Trata erros de validação (400) com mensagens específicas
+            if (error.response?.status === 400) {
+                const errorMessage = error.validationMessage || error.response?.data?.message || "Dados inválidos. Verifique as informações.";
+                toast.error(errorMessage);
+            } else if (error.response?.status === 422) {
+                // Erros de validação do Laravel
+                if (error.response?.data?.errors) {
+                    const firstError = Object.values(error.response.data.errors)[0];
+                    const errorMessage = Array.isArray(firstError) ? firstError[0] : firstError;
+                    toast.error(errorMessage);
+                } else {
+                    toast.error(error.response?.data?.message || "Erro de validação. Verifique os dados informados.");
+                }
+            } else {
+                toast.error(error.response?.data?.message || "An error occurred. Please try again.");
+            }
         }
 
     }

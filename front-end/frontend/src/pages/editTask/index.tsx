@@ -75,7 +75,25 @@ export default function EditTask() {
             toast.success("Task updated successfully!");
             navigate("/tasks");
         }catch(error){
-            toast.error('Error updating task');
+            console.error("Erro ao editar tarefa:", error);
+            // Trata erros de validação ou outros erros da API
+            if (error.response?.status === 400) {
+                const errorMessage = error.validationMessage || error.response?.data?.message || "Dados inválidos. Verifique as informações da tarefa.";
+                toast.error(errorMessage);
+            } else if (error.response?.status === 422) {
+                // Erros de validação do Laravel
+                if (error.response?.data?.errors) {
+                    const firstError = Object.values(error.response.data.errors)[0];
+                    const errorMessage = Array.isArray(firstError) ? firstError[0] : firstError;
+                    toast.error(errorMessage);
+                } else {
+                    toast.error(error.response?.data?.message || "Erro de validação. Verifique os dados informados.");
+                }
+            } else if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("An error occurred. Please try again.");
+            }
         }finally{
             setData({
                 project_id:'',

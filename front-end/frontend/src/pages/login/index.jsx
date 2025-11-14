@@ -37,7 +37,18 @@ function Login() {
             toast.success(response.message);
             navigate("/dashboard");
         } catch(error) {
-            toast.error("An error occurred. Please try again.");
+            // Trata erros de validação (400) com mensagens específicas
+            if (error.response?.status === 400) {
+                const errorMessage = error.validationMessage || error.response?.data?.message || "Dados inválidos. Verifique suas credenciais.";
+                toast.error(errorMessage);
+            } else if (error.response?.status === 401) {
+                toast.error("Credenciais inválidas. Verifique seu email e senha.");
+            } else if (error.response?.status === 422) {
+                const errorMessage = error.response?.data?.message || "Erro de validação. Verifique os dados informados.";
+                toast.error(errorMessage);
+            } else {
+                toast.error(error.response?.data?.message || "An error occurred. Please try again.");
+            }
             console.error("Erro no login:", error);
         } finally {
             // Limpa o formulário após a tentativa

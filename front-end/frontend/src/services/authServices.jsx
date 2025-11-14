@@ -12,8 +12,16 @@ import axios from "axios";
  * @returns {Promise<Object>} Resposta da API com token e dados do usuário
  */
 export const loginService = async (formData) => {
-    const response = await api.post('/login', formData);
-    return response.data;
+    try {
+        const response = await api.post('/login', formData);
+        // Log para debug (pode ser removido em produção)
+        console.log('Login response status:', response.status);
+        console.log('Login response data:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Erro no login:', error);
+        throw error;
+    }
 };
 
 /**
@@ -22,8 +30,16 @@ export const loginService = async (formData) => {
  * @returns {Promise<Object>} Resposta da API com token e dados do usuário
  */
 export const registerService = async (formData) => {
-    const response = await api.post('/register', formData);
-    return response.data;
+    try {
+        const response = await api.post('/register', formData);
+        // Log para debug (pode ser removido em produção)
+        console.log('Register response status:', response.status);
+        console.log('Register response data:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Erro no registro:', error);
+        throw error;
+    }
 };
 
 /**
@@ -42,10 +58,14 @@ export const updateUserService = async (userId, data, token, isFormData = false)
         // Se for FormData (upload de foto), usa uma instância do axios com configuração específica
         if (isFormData) {
             const axiosInstance = axios.create({
-                baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+                baseURL: import.meta.env.VITE_API_URL,
                 headers: {
                     'Accept': 'application/json',
-                }
+                },
+                // Garante que status 200 e 201 sejam tratados como sucesso
+                validateStatus: function (status) {
+                    return status >= 200 && status < 300;
+                },
             });
 
             // Envia como POST para suportar multipart/form-data
@@ -66,6 +86,7 @@ export const updateUserService = async (userId, data, token, isFormData = false)
         return response.data;
     } catch (error) {
         // Propaga o erro para ser tratado pelo componente
-        console.log(error);
+        console.error('Erro ao atualizar usuário:', error);
+        throw error;
     }
 };
