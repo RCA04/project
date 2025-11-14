@@ -1,19 +1,19 @@
 import { Navigate } from "react-router-dom";
+import { UseAuth } from "../../context/AuthContext";
 
 /**
  * Componente de Rota Protegida
  * Verifica se o usuário está autenticado antes de renderizar o conteúdo
- * Redireciona para a página de login se não houver token
+ * Redireciona para a página de login se não houver token ou usuário
  */
 export default function ProtectedRoute({children}) {
-    // Verifica se existe um token de autenticação no localStorage
-    const token = localStorage.getItem("token");
+    const { token, user } = UseAuth();
 
-    // Se não houver token, redireciona para a página de login
-    if(!token) {
+    // Se não houver token ou usuário, redireciona para a página de login
+    if(!token || !user) {
         return <Navigate to="/login" replace />;
     }
 
-    // Se houver token, renderiza o conteúdo protegido
+    // Se houver token e usuário, renderiza o conteúdo protegido
     return children;
 }

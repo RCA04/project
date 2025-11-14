@@ -4,11 +4,13 @@ import { useState } from "react"
 import { toast } from "react-toastify";
 import { registerService } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
+import { UseAuth } from "../../context/AuthContext";
 
 function Register(){
 
 
     const navigate = useNavigate();
+    const { login } = UseAuth();
     const state = "register"
 
 
@@ -26,9 +28,21 @@ function Register(){
 
         try{
            const response = await registerService(formData)
-            const token = response.token
-            localStorage.setItem("token", token)
-            toast.success(response.message)
+            console.log('Resposta do registro:', response);
+            
+            // Extrai token e user da resposta (suporta diferentes estruturas)
+            const token = response.token || response.data?.token;
+            const user = response.user || response.data?.user;
+            
+            if (!token || !user) {
+                console.error('Token ou user não encontrado na resposta:', response);
+                toast.error('Erro: Dados de autenticação não recebidos corretamente.');
+                return;
+            }
+            
+            // Atualiza o contexto de autenticação (salva token e user)
+            login(token, user);
+            toast.success(response.message || 'Registro realizado com sucesso!')
             navigate('/welcome')
         }catch(error){
             console.error("Erro no registro:", error);
